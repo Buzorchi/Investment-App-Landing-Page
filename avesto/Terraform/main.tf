@@ -17,24 +17,26 @@ provider "azurerm" {
 
 locals {
   resource_group_name = "BIT_PROJECT_GROUP_ONE"
-  location = "East US"
+  location            = "East US"
 }
 
-resource "azurerm_resource_group" "Resource_Group"{
-  name= local.resource_group_name
-  location= local.location
+resource "azurerm_resource_group" "Resource_Group" {
+  name     = local.resource_group_name
+  location = local.location
 }
 
 resource "azurerm_app_service_plan" "App_Plan" {
   name                = "bit_group_one_app-plan"
   location            = local.location
   resource_group_name = local.resource_group_name
-  depends_on = [ azurerm_resource_group.Resource_Group ]
+  depends_on          = [azurerm_resource_group.Resource_Group]
 
   sku {
     tier = "Free"
     size = "F1"
   }
+
+  kind = "Linux" 
 }
 
 resource "azurerm_app_service" "WebApp" {
@@ -42,6 +44,5 @@ resource "azurerm_app_service" "WebApp" {
   location            = local.location
   resource_group_name = local.resource_group_name
   app_service_plan_id = azurerm_app_service_plan.App_Plan.id
-  depends_on = [ azurerm_app_service_plan.App_Plan ]
+  depends_on          = [azurerm_app_service_plan.App_Plan]
 }
-

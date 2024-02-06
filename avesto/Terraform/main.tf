@@ -9,8 +9,8 @@ terraform {
 
 provider "azurerm" {
   subscription_id = "1bbe1d16-db50-421b-9afb-771f42577508"
-  client_id       = "dc597b3f-959b-4267-9868-a49560059f19"
-  client_secret   = "MP-8Q~63efyvDwAXMpU3_y_KkIfwZvr1SzO.haeQ"
+  client_id       = "2a121695-4ede-44aa-903e-6bd0e2a65c21"
+  client_secret   = "1Iz8Q~G_1-vXYEsAmhqeDAqyzmh96PvbonzXVbh2"
   tenant_id       = "7b2f922c-33b1-4c77-a870-99bfb9429a4d"
   features {}
 }
@@ -26,11 +26,9 @@ resource "azurerm_resource_group" "Resource_Group"{
 }
 
 resource "azurerm_app_service_plan" "App_Plan" {
-  name                = "bit-group-one-app-plan"
+  name                = "bit_group_one_app-plan"
   location            = local.location
   resource_group_name = local.resource_group_name
-  kind = "Linux"
-  reserved = true
   depends_on = [ azurerm_resource_group.Resource_Group ]
 
   sku {
@@ -40,7 +38,7 @@ resource "azurerm_app_service_plan" "App_Plan" {
 }
 
 resource "azurerm_app_service" "WebApp" {
-  name                = "bitgroupwebapp"
+  name                = "bitgrouponewebapp"
   location            = local.location
   resource_group_name = local.resource_group_name
   app_service_plan_id = azurerm_app_service_plan.App_Plan.id

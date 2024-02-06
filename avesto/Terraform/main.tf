@@ -26,7 +26,7 @@ resource "azurerm_resource_group" "Resource_Group"{
 }
 
 resource "azurerm_app_service_plan" "App_Plan" {
-  name                = "app-plan10"
+  name                = "bit-group-one-app-plan"
   location            = local.location
   resource_group_name = local.resource_group_name
   kind = "Linux"
@@ -40,7 +40,7 @@ resource "azurerm_app_service_plan" "App_Plan" {
 }
 
 resource "azurerm_app_service" "WebApp" {
-  name                = "webapp2506"
+  name                = "bitgrouponewebapp"
   location            = local.location
   resource_group_name = local.resource_group_name
   app_service_plan_id = azurerm_app_service_plan.App_Plan.id

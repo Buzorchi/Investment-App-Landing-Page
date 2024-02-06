@@ -36,7 +36,8 @@ resource "azurerm_app_service_plan" "App_Plan" {
     size = "F1"
   }
 
-  kind = "Linux" 
+  kind     = "Linux" 
+  reserved = true
 }
 
 resource "azurerm_app_service" "WebApp" {

@@ -1,12 +1,34 @@
-import React from 'react';
+import React from 'react';import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+import './index.css';
+import LandingPage from './pages/LandingPage';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+// import App from './App';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage/>,
+  },
+  {
+    path: "/signin",
+    element: <SignIn/>,
+  },
+  {
+    path: "/signup",
+    element: <SignUp/>,
+  },
+  
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 

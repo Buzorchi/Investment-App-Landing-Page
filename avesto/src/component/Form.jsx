@@ -1,76 +1,145 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
+import axios from "axios";
+import eyeHideIcon from "../assets/eyeHideIcon.svg";
+import eyeShowIcon from "../assets/eyeShowIcon.svg";
 
 const Form = () => {
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   // Function to check password conditions
   const isPasswordValid = (password) => {
     // Add your password conditions here
-    // For example, at least 8 characters, one uppercase, one lowercase, and one digit
-    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    // For example, at least 8 characters, one uppercase, one lowercase, one special character and one digit
+    const regex =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{:;'?/>.<,])(?=.{8,})/;
     return regex.test(password);
   };
+
+  const handleSignUp = async (
+    values,
+    { setSubmitting, setErrors, resetForm }
+  ) => {
+    console.log(values);
+    try {
+      console.log("Values being sent to the server:", values);
+      // Make API call using Axios
+      const response = await axios.post(
+        "https://2a98-102-88-83-196.ngrok-free.app/api/User/register",
+        values
+      );
+      console.log("Response from server:", response.data);
+      console.log(response)
+
+      if (response.status !== 200) {
+        // Handle error response
+        console.log(
+          "Error response received from server:",
+          response.data.errors
+        );
+        setErrors(response.data.errors);
+        setSubmitting(false);
+        // console.log("Response from server:", response.data);
+
+        return;
+      }
+
+      // If successful response
+      // If successful registration, move to the signup
+      const { message } = response.data;
+      console.log('message', message)
+      if (message === "User registered successfully") {
+        // Redirect to OTP page
+        navigate("/"); // Change "/otp" to the actual route of your OTP page
+      } else {
+        // Handle other messages
+        console.log(message);
+      }
+      alert("Sign up successful!");
+      resetForm();
+      setSubmitting(false);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error occurred:", error);
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div>
       <Formik
-        initialValues={{ firstName: "", lastName: "", email: "", mobileNumber: "", password: "", confirmPassword: "" }}
+        initialValues={{
+          firstName: "",
+          lastName: "",
+          email: "",
+          phoneNumber: "",
+          password: "",
+          confirmPassword: "",
+        }}
         validate={(values) => {
           const errors = {};
-         // First Name validation
-         if (!values.firstName) {
-          errors.firstName = "First name is required";
-        }
-
-        // Last Name validation
-        if (!values.lastName) {
-          errors.lastName = "Last name is required";
-        }
-
-        // Email validation
-        if (!values.email) {
-          errors.email = "Email is required";
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-          errors.email = "Invalid email address";
-        }
-
-        // Mobile Number validation
-        if (!values.mobileNumber) {
-          errors.mobileNumber = "Mobile number is required";
-        } else if (!/^[0-9]{1,11}$/i.test(values.mobileNumber)){
-          errors.mobileNumber = "Invalid mobile number";
-        }
-
-        // Password validation
-        if (!values.password) {
-          errors.password = "Password is required";
-        } else if (!isPasswordValid(values.password)) {
-          errors.password =
-            "Password must have at least 8 characters, one uppercase letter, one lowercase letter, and one digit";
-        }
-
-        // Confirm Password validation
-        if (values.password !== values.confirmPassword) {
-          errors.confirmPassword = "Passwords do not match";
-        }
-
-        return errors;
-      }}
-        onSubmit={(values, { setSubmitting, setErrors, resetForm }) => {
-
-          if (!isPasswordValid(values.password)) {
-            // If the password is not valid, set an error message and return early
-            setErrors({ password: "Invalid password" });
-            setSubmitting(false);
-            return;
+          console.log("Validating form values:", values);
+          // First Name validation
+          if (!values.firstName) {
+            errors.firstName = "First name is required";
           }
-          setTimeout(() => {
-            console.log("Submitting form with values:", values)
-            // alert(JSON.stringify(values, null, 2));
-            resetForm();
-            setSubmitting(false);
-          }, 200);
+
+          // Last Name validation
+          if (!values.lastName) {
+            errors.lastName = "Last name is required";
+          }
+
+          // Email validation
+          if (!values.email) {
+            errors.email = "Email is required";
+          } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          ) {
+            errors.email = "Invalid email address";
+          }
+
+          // Mobile Number validation
+          if (!values.phoneNumber) {
+            errors.phoneNumber = "Mobile number is required";
+          } else if (!/^[0-9]{1,11}$/i.test(values.phoneNumber)) {
+            errors.phoneNumber = "Invalid mobile number";
+          }
+
+          // Password validation
+          if (!values.password) {
+            errors.password = "Password is required";
+          } else if (!isPasswordValid(values.password)) {
+            errors.password =
+              "Password must have at least 8 characters, one uppercase letter,one special character one lowercase letter, and one digit";
+          }
+
+          // Confirm Password validation
+          if (values.password !== values.confirmPassword) {
+            errors.confirmPassword = "Passwords do not match";
+          }
+
+          return errors;
         }}
+        onSubmit={handleSignUp}
+        // onSubmit={(values, { setSubmitting, setErrors, resetForm }) => {
+
+        //   if (!isPasswordValid(values.password)) {
+        //     // If the password is not valid, set an error message and return early
+        //     setErrors({ password: "Invalid password" });
+        //     setSubmitting(false);
+        //     return;
+        //   }
+        //   setTimeout(() => {
+        //     // console.log("Submitting form with values:", values)
+        //     alert(JSON.stringify(values, null, 2));
+        //     resetForm();
+        //     setSubmitting(false);
+        //   }, 200);
+        // }}
       >
-        {({
+        {/* {({
           values,
           errors,
           touched,
@@ -78,115 +147,167 @@ const Form = () => {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          /* and other goodies */
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <div class="flex-col justify-start items-start gap-2 flex">
-              <label class="text-stone-950 text-opacity-50 text-base font-semibold ">
+          and other goodies 
+        }) => ( */}
+        {(formikProps) => (
+          <form onSubmit={formikProps.handleSubmit}>
+            <div className="flex-col justify-start items-start gap-2 flex">
+              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
                 First Name
               </label>
               <input
-                class="w-[650px] px-6 py-[18px] bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-lg font-semibold"
+                className="w-[650px]  px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
                 placeholder="Enter your first name"
                 type="text"
                 name="firstName"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.firstName}
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                value={formikProps.values.firstName}
               />
-              {errors.firstName && touched.firstName && errors.firstName}
+              {formikProps.errors.firstName &&
+                formikProps.touched.firstName && (
+                  <p className="text-red-300">{formikProps.errors.firstName}</p>
+                )}
             </div>
 
-            <div class="flex-col justify-start items-start gap-2 flex mt-10">
-              <label class="text-stone-950 text-opacity-50 text-base font-semibold ">
+            <div className="flex-col justify-start items-start gap-2 flex mt-2">
+              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
                 Last Name
               </label>
               <input
-                class="w-[650px] px-6 py-[18px] bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-lg font-semibold"
+                className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
                 placeholder="Enter your last name"
                 type="text"
                 name="lastName"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.lastName}
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                value={formikProps.values.lastName}
               />
-              {errors.lastName && touched.lastName && errors.lastName}
+              {formikProps.errors.lastName && formikProps.touched.lastName && (
+                <p className="text-red-300">{formikProps.errors.lastName}</p>
+              )}
             </div>
 
-            <div class="flex-col justify-start items-start gap-2 flex mt-10">
-              <label class="text-stone-950 text-opacity-50 text-base font-semibold ">
+            <div className="flex-col justify-start items-start gap-2 flex mt-2">
+              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
                 Email Address
               </label>
               <input
-                class="w-[650px] px-6 py-[18px] bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-lg font-semibold"
+                className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
                 placeholder="Enter your email address"
                 type="email"
                 name="email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                value={formikProps.values.email}
               />
-              {errors.email && touched.email && errors.email}
+              {formikProps.errors.email && formikProps.touched.email && (
+                <p className="text-red-300">{formikProps.errors.email}</p>
+              )}
             </div>
 
-            <div class="flex-col justify-start items-start gap-2 flex mt-10">
-              <label class="text-stone-950 text-opacity-50 text-base font-semibold ">
+            <div className="flex-col justify-start items-start gap-2 flex mt-2">
+              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
                 Mobile Number
               </label>
               <input
-                class="w-[650px] px-6 py-[18px] bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-lg font-semibold"
+                className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
                 placeholder="Enter your phone number"
                 type="tel"
-                name="mobileNumber"
+                name="phoneNumber"
                 onChange={(e) => {
                   // Limit input to 11 characters
                   const inputValue = e.target.value.slice(0, 11);
-                  handleChange({
+                  formikProps.handleChange({
                     target: {
-                      name: "mobileNumber",
+                      name: "phoneNumber",
                       value: inputValue,
                     },
                   });
                 }}
-                onBlur={handleBlur}
-                value={values.mobileNumber}
+                onBlur={formikProps.handleBlur}
+                value={formikProps.values.phoneNumber}
               />
-              {errors.mobileNumber && touched.mobileNumber && errors.mobileNumber}
+              {formikProps.errors.phoneNumber &&
+                formikProps.touched.phoneNumber && (
+                  <p className="text-red-300">
+                    {formikProps.errors.phoneNumber}
+                  </p>
+                )}
             </div>
 
-            <div class="flex-col justify-start items-start gap-2 flex mt-10">
-              <label class="text-stone-950 text-opacity-50 text-base font-semibold ">
+            <div className="flex-col justify-start items-start gap-2 flex mt-2">
+              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
                 Password
               </label>
-              <input
-                class="w-[650px] px-6 py-[18px] bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-lg font-semibold"
-                placeholder="Create your password"
-                type="password"
-                name="password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-              />
-              {errors.password && touched.password && errors.password}
+              <div className="relative">
+                <input
+                  className=" w-[650px] px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                  placeholder="Create your password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  onChange={formikProps.handleChange}
+                  onBlur={formikProps.handleBlur}
+                  value={formikProps.values.password}
+                />
+                <button
+                  type="button"
+                  className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-transparent border-none p-0 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <img src={eyeHideIcon} alt="showIcon" />
+                  ) : (
+                    <img src={eyeShowIcon} alt="showIcon" />
+                  )}
+                </button>
+              </div>
+
+              {formikProps.errors.password && formikProps.touched.password && (
+                <p className="text-red-300">{formikProps.errors.password}</p>
+              )}
             </div>
 
-            <div class="flex-col justify-start items-start gap-2 flex mt-10">
-              <label class="text-stone-950 text-opacity-50 text-base font-semibold ">
+            <div className="flex-col justify-start items-start gap-2 flex mt-2">
+              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
                 Confirm Password
               </label>
-              <input
-                class="w-[650px] px-6 py-[18px] bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-lg font-semibold"
-                placeholder="Confirm your password"
-                type="password"
-                name="confirmPassword"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.confirmPassword}
-              />
-              {errors.confirmPassword && touched.confirmPassword && errors.confirmPassword}
+              <div className="relative">
+                <input
+                  className="w-[650px] px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                  placeholder="Confirm your password"
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  onChange={formikProps.handleChange}
+                  onBlur={formikProps.handleBlur}
+                  value={formikProps.values.confirmPassword}
+                />
+                <button
+                  type="button"
+                  className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-transparent border-none p-0 cursor-pointer"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? (
+                    <img src={eyeHideIcon} alt="showIcon" />
+                  ) : (
+                    <img src={eyeShowIcon} alt="showIcon" />
+                  )}
+                </button>{" "}
+              </div>
+
+              {formikProps.errors.confirmPassword &&
+                formikProps.touched.confirmPassword && (
+                  <p className="text-red-300">
+                    {formikProps.errors.confirmPassword}
+                  </p>
+                )}
             </div>
 
-            <button type="submit" disabled={isSubmitting} class=" mt-10 w-[650px] px-4 py-[19px] bg-black rounded-sm justify-center items-center gap-2.5 inline-flex text-white text-base font-semibold">
+            <button
+              type="submit"
+              disabled={formikProps.isSubmitting}
+              className=" mt-10 w-full px-4 py-[19px] bg-gradient-to-b from-red-600 to-fuchsia-950 rounded-sm justify-center items-center gap-2.5 inline-flex text-white text-base font-semibold"
+            >
               Get Started
             </button>
           </form>

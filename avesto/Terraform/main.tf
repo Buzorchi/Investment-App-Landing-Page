@@ -32,8 +32,8 @@ resource "azurerm_app_service_plan" "App_Plan" {
   depends_on          = [azurerm_resource_group.Resource_Group]
 
   sku {
-    tier = "Basic"
-    size = "B1" 
+    tier = "P0v3"
+    size = "Premium0V3" 
   }
 
   kind     = "Linux" 

@@ -1,0 +1,12 @@
+<svg width="56" height="57" viewBox="0 0 56 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="layers">
+<mask id="mask0_395_155" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="56" height="57">
+<rect id="layers (Background/Mask)" y="0.788574" width="56" height="56" fill="white"/>
+</mask>
+<g mask="url(#mask0_395_155)">
+<path id="Vector" d="M4.66699 17.1217L28.0003 28.7884L51.3337 17.1217L28.0003 5.45508L4.66699 17.1217Z" stroke="black" stroke-width="2.92181" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M4.66699 40.4556L28.0003 52.1222L51.3337 40.4556" stroke="black" stroke-width="2.92181" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M4.66699 28.7876L28.0003 40.4543L51.3337 28.7876" stroke="black" stroke-width="2.92181" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</svg>

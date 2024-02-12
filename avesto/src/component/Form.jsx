@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
 import axios from "axios";
+import OTPVerificationModal from "./OTPVerificationModal";
 import eyeHideIcon from "../assets/eyeHideIcon.svg";
 import eyeShowIcon from "../assets/eyeShowIcon.svg";
 
@@ -9,6 +10,8 @@ const Form = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showOTPModal, setShowOTPModal] = useState(false);
+
   // Function to check password conditions
   const isPasswordValid = (password) => {
     // Add your password conditions here
@@ -22,17 +25,12 @@ const Form = () => {
     values,
     { setSubmitting, setErrors, resetForm }
   ) => {
-    console.log(values);
     try {
-      console.log("Values being sent to the server:", values);
       // Make API call using Axios
       const response = await axios.post(
-        "https://2a98-102-88-83-196.ngrok-free.app/api/User/register",
+        "https://69c8-155-93-95-78.ngrok-free.app/api/User/register",
         values
       );
-      console.log("Response from server:", response.data);
-      console.log(response)
-
       if (response.status !== 200) {
         // Handle error response
         console.log(
@@ -41,29 +39,55 @@ const Form = () => {
         );
         setErrors(response.data.errors);
         setSubmitting(false);
-        // console.log("Response from server:", response.data);
-
         return;
       }
 
-      // If successful response
-      // If successful registration, move to the signup
-      const { message } = response.data;
-      console.log('message', message)
-      if (message === "User registered successfully") {
-        // Redirect to OTP page
-        navigate("/"); // Change "/otp" to the actual route of your OTP page
-      } else {
-        // Handle other messages
-        console.log(message);
-      }
-      alert("Sign up successful!");
-      resetForm();
-      setSubmitting(false);
-      console.log(response.data);
+      // If registration successful, show OTP verification modal
+      setShowOTPModal(true);
     } catch (error) {
       console.error("Error occurred:", error);
       setSubmitting(false);
+    }
+  };
+  //     // If successful response
+  //     // If successful registration, move to the signup
+  //     const { message } = response.data;
+  //     console.log("message", message);
+  //     if (message === "User registered successfully") {
+  //       // Redirect to OTP page
+  //       navigate("/"); // Change "/otp" to the actual route of your OTP page
+  //     } else {
+  //       // Handle other messages
+  //       console.log(message);
+  //     }
+  //     alert("Sign up successful!");
+  //     resetForm();
+  //     setSubmitting(false);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error("Error occurred:", error);
+  //     setSubmitting(false);
+  //   }
+  // };
+
+  const handleOTPVerification = async (otp) => {
+    try {
+      // Make API call to verify OTP
+      const response = await axios.post(
+        "https://69c8-155-93-95-78.ngrok-free.app/api/User/validate",
+        { otp }
+      );
+      if (response.status !== 200) {
+        // Handle OTP verification error
+        console.log("OTP verification failed:", response.data.message);
+        // setErrors(response.data.errors);
+        return;
+      }
+
+      // If OTP verification successful, navigate to landing page
+      navigate("/signin");
+    } catch (error) {
+      console.error("Error occurred during OTP verification:", error);
     }
   };
 
@@ -123,40 +147,15 @@ const Form = () => {
           return errors;
         }}
         onSubmit={handleSignUp}
-        // onSubmit={(values, { setSubmitting, setErrors, resetForm }) => {
-
-        //   if (!isPasswordValid(values.password)) {
-        //     // If the password is not valid, set an error message and return early
-        //     setErrors({ password: "Invalid password" });
-        //     setSubmitting(false);
-        //     return;
-        //   }
-        //   setTimeout(() => {
-        //     // console.log("Submitting form with values:", values)
-        //     alert(JSON.stringify(values, null, 2));
-        //     resetForm();
-        //     setSubmitting(false);
-        //   }, 200);
-        // }}
       >
-        {/* {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          and other goodies 
-        }) => ( */}
         {(formikProps) => (
-          <form onSubmit={formikProps.handleSubmit}>
-            <div className="flex-col justify-start items-start gap-2 flex">
+          <form onSubmit={formikProps.handleSubmit} className="">
+            <div className="mb-2">
               <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                First Name
+                First Name <span className="text-red-700">*</span>
               </label>
               <input
-                className="w-[650px]  px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
                 placeholder="Enter your first name"
                 type="text"
                 name="firstName"
@@ -170,9 +169,9 @@ const Form = () => {
                 )}
             </div>
 
-            <div className="flex-col justify-start items-start gap-2 flex mt-2">
+            <div className="mb-2">
               <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                Last Name
+                Last Name <span className="text-red-700">*</span>
               </label>
               <input
                 className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
@@ -188,9 +187,9 @@ const Form = () => {
               )}
             </div>
 
-            <div className="flex-col justify-start items-start gap-2 flex mt-2">
+            <div className="mb-2">
               <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                Email Address
+                Email Address <span className="text-red-700">*</span>
               </label>
               <input
                 className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
@@ -206,9 +205,9 @@ const Form = () => {
               )}
             </div>
 
-            <div className="flex-col justify-start items-start gap-2 flex mt-2">
+            <div className="mb-2">
               <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                Mobile Number
+                Mobile Number <span className="text-red-700">*</span>
               </label>
               <input
                 className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
@@ -236,13 +235,13 @@ const Form = () => {
                 )}
             </div>
 
-            <div className="flex-col justify-start items-start gap-2 flex mt-2">
+            <div className="mb-2">
               <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                Password
+                Password <span className="text-red-700">*</span>
               </label>
               <div className="relative">
                 <input
-                  className=" w-[650px] px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                  className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
                   placeholder="Create your password"
                   type={showPassword ? "text" : "password"}
                   name="password"
@@ -268,13 +267,13 @@ const Form = () => {
               )}
             </div>
 
-            <div className="flex-col justify-start items-start gap-2 flex mt-2">
+            <div className="mb-4">
               <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                Confirm Password
+                Confirm Password <span className="text-red-700">*</span>
               </label>
               <div className="relative">
                 <input
-                  className="w-[650px] px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                  className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
                   placeholder="Confirm your password"
                   type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
@@ -306,13 +305,20 @@ const Form = () => {
             <button
               type="submit"
               disabled={formikProps.isSubmitting}
-              className=" mt-10 w-full px-4 py-[19px] bg-gradient-to-b from-red-600 to-fuchsia-950 rounded-sm justify-center items-center gap-2.5 inline-flex text-white text-base font-semibold"
+              className="w-full px-4 py-[19px] bg-gradient-to-b from-red-600 to-fuchsia-950 rounded-sm justify-center items-center gap-2.5 inline-flex text-white text-base font-semibold"
             >
               Get Started
             </button>
           </form>
         )}
       </Formik>
+
+      {/* OTP Verification Modal */}
+      <OTPVerificationModal
+        show={showOTPModal}
+        onClose={() => setShowOTPModal(false)}
+        onVerify={handleOTPVerification}
+      />
     </div>
   );
 };

@@ -1,20 +1,25 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Menu = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState(null);
+  // const [selectedMenu, setSelectedMenu] = useState(null);
+  const [activeLink, setActiveLink] = useState("");
+
+  const handleLinkClick = (link) => {
+    setActiveLink(link);
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleMenuClick = (menu) => {
-    setSelectedMenu(selectedMenu === menu ? null : menu);
-  };
+  // const handleMenuClick = (menu) => {
+  //   setSelectedMenu(selectedMenu === menu ? null : menu);
+  // };
 
   return (
-    <div className="relative lg:hidden ">
-      {/* overflow-hidden overscroll-auto w-[704px] h-[1070px] px-10 py-10 */}
+    <div className="relative lg:hidden">
       <button onClick={toggleMenu} className="text-gray-600 focus:outline-none">
         <svg
           className="h-6 w-6"
@@ -42,51 +47,85 @@ const Menu = () => {
       {isOpen && (
         <div
           id="menuContent"
-          className="absolute top-full left-0 mt-2 bg-gray-100 p-4"
+          className="absolute top-full right-0 mt-2 bg-gray-100 w-40 p-4"
         >
           <ul>
             <li>
-              <button
-                onClick={() => handleMenuClick("menu1")}
-                className="text-gray-600 focus:outline-none"
+              <a
+                href="#home"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "home"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("home")}
               >
-                Menu 1
-              </button>
-              {selectedMenu === "menu1" && (
-                <div className="bg-gray-100 p-4">
-                  {/* Content for Menu 1 */}
-                  <p>Menu 1 Content...</p>
-                </div>
-              )}
+                Home
+              </a>
             </li>
+
             <li>
-              <button
-                onClick={() => handleMenuClick("menu2")}
-                className="text-gray-600 focus:outline-none"
+              <a
+                href="#whyAvesto"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "whyAvesto"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("whyAvesto")}
               >
-                Menu 2
-              </button>
-              {selectedMenu === "menu2" && (
-                <div className="bg-gray-100 p-4">
-                  {/* Content for Menu 2 */}
-                  <p>Menu 2 Content...</p>
-                </div>
-              )}
+                Why Avesto?
+              </a>
             </li>
+
             <li>
-              <button
-                onClick={() => handleMenuClick("menu3")}
-                className="text-gray-600 focus:outline-none"
+              <a
+                href="#features"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "features"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("features")}
               >
-                Menu 3
-              </button>
-              {selectedMenu === "menu3" && (
-                <div className="bg-gray-100 p-4">
-                  {/* Content for Menu 3 */}
-                  <p>Menu 3 Content...</p>
-                </div>
-              )}
+                Features
+              </a>
             </li>
+
+            <li>
+              <a
+                href="#faq"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "faq"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("faq")}
+              >
+                FAQ
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="#contact"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "contact"
+                    ? "font-bold active:leading-loose active:text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("contact")}
+              >
+                Get in Touch
+              </a>
+            </li>
+
+            <Link
+              to="/signin"
+              className="px-3 py-2 bg-gradient-to-br from-red-600 to-fuchsia-950 rounded-sm text-white text-xs font-extrabold animate-pulse"
+            >
+              Get Started
+            </Link>
           </ul>
         </div>
       )}

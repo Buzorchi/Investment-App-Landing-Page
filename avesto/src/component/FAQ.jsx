@@ -20,8 +20,8 @@ const FAQ = () => {
 
   return (
     <>
-      <section className="text-center">
-        <div className="my-12">
+      <section className="text-center" id="faq">
+        <div className="py-20">
           {" "}
           <h2>Frequently Asked Question</h2>
           <img className="m-auto" src={line} alt="line" />{" "}
@@ -31,7 +31,7 @@ const FAQ = () => {
           className="border-b-2 py-8"
         >
           <div className="flex justify-between ">
-            <h3 className="text-base font-bold text-left mb-4 ">
+            <h3 className="text-base font-bold text-left mb-4  ">
               What makes this investment app ideal for young Nigerians?
             </h3>
             {faqVisibility.faq1 ? (

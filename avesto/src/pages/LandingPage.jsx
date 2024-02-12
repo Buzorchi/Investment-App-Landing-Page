@@ -1,140 +1,161 @@
-import React from "react";
+import React, { useState } from "react";
 import Menu from "../component/Menu";
 import { Link } from "react-router-dom";
 import all from "../assets/landingPage/allInOne.png";
 import blackArrow from "../assets/landingPage/blackArrow.svg";
 import dollar from "../assets/landingPage/dollar.svg";
 import easy from "../assets/landingPage/easy.png";
-import phone from "../assets/landingPage/phone.svg";
+import phone from "../assets/landingPage/phoneLg.png";
 import layers from "../assets/landingPage/layers.svg";
 import lightInbox from "../assets/landingPage/light_inbox.svg";
 import line from "../assets/landingPage/line.svg";
 import rightArrow from "../assets/landingPage/Arrow.svg";
 import safety from "../assets/landingPage/safety.png";
-import sideimg1 from "../assets/landingPage/sideimg1.png";
-import siderimg2 from "../assets/landingPage/signimg2.svg";
+import googleIcon from "../assets/landingPage/logos_google-play-icon.svg";
+import appleIcon from "../assets/landingPage/apple-icon.svg";
+import logo from "../assets/landingPage/raiser.svg"
 import FAQ from "../component/FAQ";
 
-const LandingPage = ({ embedId }) => {
+const LandingPage = () => {
+  const [activeLink, setActiveLink] = useState("");
+
+  const handleLinkClick = (link) => {
+    setActiveLink(link);
+  };
+
   return (
     <div className="absolute">
-      <nav className="navbar fixed top-0 w-full bg-white z-10 transition-all duration-300 py-2 px-5 border-b-2 border-neutral-100 justify-between items-center  inline-flex">
-        <div className="justify- items-center gap-8 flex ">
-          {/*menu*/}
-          <Menu />
+      <nav className="navbar fixed top-0 w-full bg-white z-10 transition-all duration-700 py-2 px-5 border-b-2 border-neutral-100 justify-between items-center inline-flex">
+        <div className="flex items-center gap-20">
           {/* logo */}
           <img
-            className="w-[84px] h-[31px] md:w-[185px] md:h-[61px] bg-zinc-300"
-            src=""
+            className=""
+            src={logo}
             alt="logo"
           />
+
+          <div>
+            <nav className="justify-start items-center gap-16 lg:inline-flex hidden">
+              <a
+                href="#home"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "home"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("home")}
+              >
+                Home
+              </a>
+
+              <a
+                href="#whyAvesto"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "whyAvesto"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("whyAvesto")}
+              >
+                Why Avesto?
+              </a>
+
+              <a
+                href="#features"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "features"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("features")}
+              >
+                Features
+              </a>
+
+              <a
+                href="#faq"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "faq"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("faq")}
+              >
+                FAQ
+              </a>
+
+              <a
+                href="#contact"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "contact"
+                    ? "font-bold active:leading-loose active:text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("contact")}
+              >
+                Get in Touch
+              </a>
+            </nav>
+          </div>
         </div>
-        <nav className="justify-start items-center gap-16 lg:inline-flex hidden">
-          {/* <NavLink
-            to="#home"
-            className="text-base text-black font-normal leading-[27px]"
-            activeClassName="font-bold leading-loose text-rose-800 active"
-          >
-            Home
-          </NavLink> */}
-
-          <a
-            href="#home"
-            className="text-base text-black font-normal leading-[27px] active:font-bold active:leading-loose active:text-rose-800"
-          >
-            Home
-          </a>
-          <a
-            href="#whyAvesto"
-            className="text-base text-black font-normal leading-[27px] active:font-bold active:leading-loose active:text-rose-800"
-          >
-            Why Avesto
-          </a>
-
-          {/* <NavLink
-            to="#whyAvesto"
-            className="text-base text-black font-normal leading-[27px]"
-            activeClassName="font-bold leading-loose text-rose-800 active"
-          >
-            Why Avesto?
-          </NavLink> */}
-
-          {/* <NavLink
-            to="#features"
-            className="text-base text-black font-normal leading-[27px]"
-            activeClassName="font-bold leading-loose text-rose-800 active"
-          >
-            Features
-          </NavLink> */}
-          <a
-            href="#features"
-            className="text-base text-black font-normal leading-[27px] active:font-bold active:leading-loose active:text-rose-800"
-          >
-            Feature
-          </a>
-
-          <a
-            href="#faq"
-            className="text-base text-black font-normal leading-[27px] active:font-bold active:leading-loose active:text-rose-800"
-          >
-            FAQ
-          </a>
-
-          {/* <NavLink
-            to="#faq"
-            className="text-base text-black font-normal leading-[27px]"
-            activeClassName="font-bold leading-loose text-rose-800 active"
-          >
-            FAQ
-          </NavLink> */}
-
-          <a
-            href="#contact"
-            className="text-base text-black font-normal leading-[27px] active:font-bold active:leading-loose active:text-rose-800"
-          >
-            Get in Touch
-          </a>
-          {/* 
-          <NavLink
-            to="#contact"
-            className="text-base text-black font-normal leading-[27px]"
-            activeClassName="font-bold leading-loose text-rose-800 active"
-          >
-            Get in Touch
-          </NavLink> */}
-        </nav>
-        <button className="px-3.5 py-2.5 sm:px-10 sm:py-4 bg-gradient-to-br from-red-600 to-fuchsia-950 rounded-sm  text-white text-xs font-extrabold  leading-tight">
-          Download App
-        </button>
+        <Link
+          to="/signin"
+          className="hidden lg:block px-3.5 py-2.5 sm:px-10 sm:py-4 bg-gradient-to-br from-red-600 to-fuchsia-950 rounded-sm  text-white text-xs font-extrabold animate-pulse"
+        >
+          Get Started
+        </Link>
+        {/*menu*/}
+        <Menu />
       </nav>
 
       {/* main content */}
       <main>
         <div className="w-[90%] m-auto my-24">
           {/* home */}
-          <section id="home" className="h-[]">
+          <section id="home" className="">
             <div className="text-center py-12  ">
               <h2 className="text-center text-rose-800 text-[32px] lg:text-6xl font-bold  leading-10  ">
                 Simplified Investing Just <br /> for you.
               </h2>
-              <p className="text-zinc-900 text-sm md:text-lg font-normal  my-8">
+              <h2 className="text-zinc-900 text-base md:text-lg font-normal  my-8">
                 Set out on your financial adventure with assurance, where
                 maneuvering through the complexities of finance <br /> feels
                 like a gentle breeze!
-              </p>
+              </h2>
 
-              <Link
-                to="/signin"
-                className="text-xs lg:text-xl mt-4 px-4 py-2 font-bold text-white bg-gradient-to-br from-red-600 to-fuchsia-950 rounded-sm "
-              >
-                Get Started
+              <Link to="/">
+                <div className="gap-5 flex justify-center">
+                  <button className="w-[178.81px] h-[62.07px] bg-zinc-900 rounded-[1.12px] inline-flex justify-center items-center gap-5 transition ease-in-out delay-150 duration-700 hover:-translate-y-1 hover:scale-110">
+                    <img src={googleIcon} alt="" />
+                    <div className="text-white flex-col justify-start items-start inline-flex">
+                      <p className="font-normal leading-3 text-white text-xs  ">
+                        Get it on
+                      </p>
+                      <span className="leading-tight font-semibold">
+                        Google Play
+                      </span>
+                    </div>
+                  </button>
+                  <button className="w-[178.81px] h-[62.07px] bg-zinc-900 rounded-[1.12px] inline-flex justify-center items-center gap-5 transition ease-in-out delay-150 duration-700 hover:-translate-y-1 hover:scale-110 ">
+                    <img src={appleIcon} alt="" />
+                    <div className="text-white flex-col justify-start items-start inline-flex">
+                      <p className="font-normal leading-3 text-white text-xs  ">
+                        Download on the
+                      </p>
+                      <span className="leading-tight font-semibold">
+                        Apple Store
+                      </span>
+                    </div>
+                  </button>
+                </div>
               </Link>
+              {/* className="text-xs lg:text-xl mt-4 px-4 py-2 font-bold text-white bg-gradient-to-br from-red-600 to-fuchsia-950 rounded-sm " */}
             </div>
 
             <div className="aspect-w-16 aspect-h-9">
               <iframe
                 className="w-full h-[372px]"
-                src={`https://www.youtube.com/embed/${embedId}`}
+                src={`https://www.youtube.com/embed/${"0kwl10ftLm0"}`}
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -144,15 +165,15 @@ const LandingPage = ({ embedId }) => {
           </section>
 
           {/* why avesto */}
-          <section id="whyAvesto" className="">
+          <section id="whyAvesto" className="pt-10">
             <div className="text-center py-12 ">
               <h2 className="text-center leading-10 lg:text-5xl text-[32px]">
                 Our Best Services <br /> For Your Convenience.
               </h2>
-              <p className="text-zinc-900 text-sm lg:text-base font-normal  my-8">
+              <p className="text-zinc-900 text-base lg:text-base font-normal  my-8">
                 Enjoy unbeatable convenience with our amazing services! We've
-                got you covered with <br /> top-notch options, making sure
-                everything fits your className effortlessly.
+                got you covered with top-notch options, making sure everything
+                fits your className effortlessly.
               </p>
               <img className="m-auto" src={line} alt="line" />
 
@@ -164,7 +185,7 @@ const LandingPage = ({ embedId }) => {
             </div>
 
             <div className="flex flex-col gap-12 lg:flex-row">
-              <div className="p-5 bg-white shadow">
+              <div className="p-5 bg-white shadow transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-slate-100 duration-700">
                 <img src={safety} alt="safety" />
                 <h2 className="font-medium my-8">Guarantee Safety</h2>
                 <p className="font-normal leading-[27px">
@@ -174,7 +195,7 @@ const LandingPage = ({ embedId }) => {
                 </p>
               </div>
 
-              <div className="p-5 bg-white shadow">
+              <div className="p-5 bg-white shadow transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-slate-100 duration-700">
                 <img src={all} alt="all" />
                 <h2 className="font-medium my-8">All in One App</h2>
                 <p>
@@ -184,7 +205,7 @@ const LandingPage = ({ embedId }) => {
                 </p>
               </div>
 
-              <div className="p-5 bg-white shadow">
+              <div className="p-5 bg-white shadow transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-slate-100 duration-700">
                 <img src={easy} alt="easy" />
                 <h2 className="font-medium my-8">Easy to Use</h2>
                 <p>
@@ -199,13 +220,13 @@ const LandingPage = ({ embedId }) => {
                 <h2 className="text-2xl lg:text-5xl">
                   These are reasons why you should use <br /> Avesto
                 </h2>
-                <p className="text-zinc-900 text-sm lg:text-base font-normal leading-[27px] my-6">
+                <p className="text-zinc-900 text-base lg:text-base font-normal leading-[27px] my-6">
                   Unlock and secure your financial potential here!
                 </p>
                 <img className="m-auto" src={line} alt="line" />
               </div>
               <div className="grid gap-12 lg:grid-cols-2">
-                <div className="p-5 bg-white shadow">
+                <div className="p-5 bg-white shadow transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-slate-100 duration-700">
                   <img src={safety} alt="safety" />
                   <h2 className="font-medium text-2xl my-8">
                     Diversified Investment
@@ -218,7 +239,7 @@ const LandingPage = ({ embedId }) => {
                   </p>
                 </div>
 
-                <div className="p-5 bg-white shadow">
+                <div className="p-5 bg-white shadow transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-slate-100 duration-700">
                   <img src={all} alt="all" />
                   <h2 className="font-medium text-2xl  my-8">
                     Educational Resources
@@ -231,7 +252,7 @@ const LandingPage = ({ embedId }) => {
                   </p>
                 </div>
 
-                <div className="p-5 bg-white shadow">
+                <div className="p-5 bg-white shadow transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-slate-100 duration-700">
                   <img src={easy} alt="easy" />
                   <h2 className="font-medium text-2xl my-8">Minimal Risk</h2>
                   <p>
@@ -241,7 +262,7 @@ const LandingPage = ({ embedId }) => {
                   </p>
                 </div>
 
-                <div className="p-5 bg-white shadow">
+                <div className="p-5 bg-white shadow transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-slate-100 duration-700">
                   <img src={easy} alt="easy" />
                   <h2 className="font-medium text-2xl my-8">
                     User-Friendly Interface:
@@ -257,27 +278,26 @@ const LandingPage = ({ embedId }) => {
           </section>
 
           {/* features */}
-          <section id="features">
+          <section id="features" className="pt-10">
             <div className="my-10 text-center">
-              <h2 className="text- sm:text-5xl leading-loose">
+              <h2 className="text-center sm:text-5xl leading-loose">
                 Unlock a World of Incredible Features
               </h2>
               <p className="my-8">
                 Open the doors to amazing vibes and dope features! Experience a
-                world of <br /> awesomeness waiting for you to explore and
-                enjoy.
+                world of awesomeness waiting for you to explore and enjoy.
               </p>
               <img className="m-auto" src={line} alt="line" />
             </div>
 
             {/* not completed yet */}
-            <div className="bg-rose-800 py-14  md:flex relative ">
-              <div className="pl-28">
+            <div className="bg-rose-800 py-14 md:flex px-10 relative">
+              <div className="">
                 <img src={lightInbox} alt="lightInbox" />
-                <h2 className="text-white text-2xl font-semibold my-8">
+                <h2 className="text-white text-2xl font-semibold my-8 ">
                   Personalized Investment
                 </h2>
-                <p className="text-white my-8">
+                <p className="text-white my-8 pr-5">
                   Designing a financial future specifically for you step into
                   the realm of personalized investment excellence
                 </p>
@@ -287,7 +307,7 @@ const LandingPage = ({ embedId }) => {
                   className="absolute bottom-14 left-28"
                 />
               </div>
-              <div className="w-[258.44px] h-[374px] mx-10 sm:mx-40 items-center gap-[20.12px] inline-flex">
+              <div className="w-[258.44px] h-[374px] mx-auto  items-center gap-[20.12px] inline-flex">
                 <img
                   src=""
                   alt="personalize img"
@@ -309,109 +329,112 @@ const LandingPage = ({ embedId }) => {
             </div>
 
             {/* Need to edit this code; group investment */}
-            <div className="my-20 sm:flex ">
+            <div className="my-20 sm:flex justify-center items-center gap-28 bg-red-700 bg-opacity-5 rounded-sm  ">
               <div>
-                <img className="m-auto mb-8" src={phone} alt="phone" />
+                {/* <img
+                  className="m-auto mb-8 hidden"
+                  src={phone}
+                  alt="phone"
+                /> */}
+                <img
+                  src={phone}
+                  alt="phone on large screen"
+                  className="sm:w-[344px] sm:h-[344px] "
+                />
               </div>
-              <div>
-                <img src={layers} alt="layer" />
+              <div className="ml-5 my-5">
+                <img src={layers} alt="layer" className="w-[50px] h-[30px] " />
                 <h2 className="my-8">Group Investment</h2>
-                <p className="mb-20">
-                  Dive into the power of collective growth with group
-                  investments where shared success becomes our shared journey!
+                <p className="mb-8">
+                  Dive into the power of collective growth <br /> with group
+                  investments where shared <br /> success becomes our shared
+                  journey!
                 </p>
-                <img src={blackArrow} alt="blackArrow" />
+                <img src={blackArrow} alt="blackArrow" className="" />
               </div>
             </div>
 
-            <div className="bg-rose-800 py-14 px-4">
-              <div>
+            <div className="bg-rose-800 py-14 px-4 sm:flex ">
+              <div className="ml-14">
                 <img src={dollar} alt="dollar" />
-                <h2 className="text-white text-2xl font-semibold my-8">
+                <h2 className="text-white text-2xl font-semibold mt-3">
                   Dollar Investment
                 </h2>
                 <p className="text-white my-8">
-                  Multiply your potential with dollar investments turning
-                  individual dollars into a pathway for financial growth!.
+                  Multiply your potential with dollar <br /> investments turning
+                  individual dollars into <br /> a pathway for financial
+                  growth!.
                 </p>
                 <img src={rightArrow} alt="rightArrow" />
+              </div>
+
+              <div className="">
+                {/* <div class="w-[874px] h-[538px] bg-stone-300 rounded-sm border-rose-100  "></div> */}
               </div>
             </div>
           </section>
           <FAQ />
         </div>
 
-        {/* coming back to update this code; footer */}
-        <section id="contact">
-          <div className="w-full h-[527px] py-8 bg-rose-800 flex-col justify-center items-center gap-16 inline-flex">
-            <div className="px-4 flex-col justify-start items-start gap-16 flex">
-              <div className="flex-col justify-start items-start gap-4 flex">
-                <div className="w-[150px] h-14 bg-zinc-300"></div>
-                <div className="w-[312px] text-white text-base font-normal  leading-[27px]">
-                  A marketplace that sells various types of work by professional
-                  designers and is paid with NFT tokens.
-                </div>
-              </div>
-              <div className="self-stretch justify-start items-start gap-[52px] inline-flex">
-                <div className="justify-start items-start gap-10 flex">
-                  <div className="w-[78px] h-36 relative">
-                    <div className="left-0 top-[128px] absolute text-white text-xs font-normal  leading-none">
-                      How It Works
-                    </div>
-                    <div className="left-0 top-[88px] absolute text-white text-xs font-normal  leading-none">
-                      Our Services
-                    </div>
-                    <div className="w-[78px] left-0 top-[48px] absolute text-white text-xs font-normal  leading-none">
-                      About Us
-                    </div>
-                    <div className="left-0 top-0 absolute text-white text-sm font-bold  leading-loose">
-                      About Us
-                    </div>
-                  </div>
-                  <div className="w-[74px] h-[104px] relative">
-                    <div className="left-0 top-[88px] absolute text-white text-xs font-normal  leading-none">
-                      Blog
-                    </div>
-                    <div className="left-0 top-[48px] absolute text-white text-xs font-normal  leading-none">
-                      Help Center
-                    </div>
-                    <div className="left-[1px] top-0 absolute text-white text-sm font-bold  leading-loose">
-                      Community
-                    </div>
-                  </div>
-                </div>
-                <div className="w-[104px] h-36 relative">
-                  <div className="w-[104px] left-0 top-[48px] absolute text-white text-xs font-normal  leading-none">
-                    Instagram
-                  </div>
-                  <div className="w-[104px] left-0 top-[88px] absolute text-white text-xs font-normal  leading-none">
-                    Facebook
-                  </div>
-                  <div className="w-[104px] left-0 top-[128px] absolute text-white text-xs font-normal  leading-none">
-                    Twitter
-                  </div>
-                  <div className="left-[1px] top-0 absolute text-white text-sm font-bold  leading-loose">
-                    Social Media
-                  </div>
-                </div>
-              </div>
+        {/* footer */}
+        <footer id="contact" className="bg-rose-800">
+          <div className="container mx-auto py-8 flex flex-wrap gap-20 items-center px-10">
+            <div className="flex flex-col gap-4">
+              {/* Logo */}
+              <img src="logo.png" className="w-24 h-auto" alt="Logo" />
+              <p className="text-white text-base font-normal leading-[1.6875rem] w-[297px]">
+                A marketplace that sells various types of work by professional
+                designers and is paid with NFT tokens.
+              </p>
             </div>
-            <div className="justify-start items-center gap-[67px] inline-flex">
-              <div className="text-white text-opacity-50 text-xs font-normal ">
-                Copyright @2024 Avesto
+            <div className="inline-flex gap-36 pt-10">
+              <div className="flex flex-col gap-5">
+                <h4 className="text-white font-bold leading-loose">About Us</h4>
+                <p className="text-white text-xs font-normal leading-none">
+                  About Us
+                </p>
+                <p className="text-white text-xs font-normal leading-none">
+                  How It Works
+                </p>
+                <p className="text-white text-xs font-normal leading-none">
+                  Our Services
+                </p>
               </div>
-              <div>
-                <span className="text-neutral-100 text-xs font-normal  leading-[38px]">
-                  Privacy
-                </span>
-                <span className="text-stone-50 text-xs font-normal  leading-[38px]">
-                  {" "}
-                  Security Terms
-                </span>
+              <div className="flex flex-col gap-5">
+                <h4 className="text-white font-bold leading-loose">
+                  Community
+                </h4>
+                <p className="text-white text-xs font-normal leading-none">
+                  Help Center
+                </p>
+                <p className="text-white text-xs font-normal leading-none">
+                  Blog
+                </p>
+              </div>
+              <div className="flex flex-col gap-5">
+                <h4 className="text-white font-bold leading-loose">
+                  Social Media
+                </h4>
+                <p className="text-white text-xs font-normal leading-none">
+                  Instagram
+                </p>
+                <p className="text-white text-xs font-normal leading-none">
+                  Facebook
+                </p>
+                <p className="text-white text-xs font-normal leading-none">
+                  Twitter
+                </p>
               </div>
             </div>
           </div>
-        </section>
+          <div className="text-white text-opacity-50 text-base font-normal flex justify-between px-10 pb-4 items-center gap-4">
+            <span>Copyright &copy; 2024 Avesto</span>
+            <div className="flex gap-2">
+              <span>Privacy</span>
+              <span>Security Terms</span>
+            </div>
+          </div>
+        </footer>
       </main>
     </div>
   );

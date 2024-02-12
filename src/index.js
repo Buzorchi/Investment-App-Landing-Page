@@ -8,6 +8,7 @@ import './index.css';
 import LandingPage from './pages/LandingPage';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import OTPVerificationModal from './component/OTPVerificationModal';
 // import App from './App';
 
 const router = createBrowserRouter([
@@ -23,7 +24,10 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <SignUp/>,
   },
-  
+  {
+    path: "/otp",
+    element: <OTPVerificationModal/>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

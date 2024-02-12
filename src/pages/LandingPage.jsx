@@ -24,98 +24,103 @@ const LandingPage = () => {
 
   return (
     <div className="absolute">
-      <nav className="navbar fixed top-0 w-full bg-white z-10 transition-all duration-700 py-2 px-5 border-b-2 border-neutral-100 justify-between items-center  inline-flex">
-        <div className="justify- items-center gap-8 flex ">
-          {/*menu*/}
-          <Menu />
+      <nav className="navbar fixed top-0 w-full bg-white z-10 transition-all duration-700 py-2 px-5 border-b-2 border-neutral-100 justify-between  items-center  inline-flex">
+        <div className="flex items-center gap-20">
           {/* logo */}
           <img
             className="w-[84px] h-[31px] md:w-[185px] md:h-[61px] bg-zinc-300"
             src=""
             alt="logo"
           />
+
+          <div>
+            <nav className="justify-start items-center gap-16 lg:inline-flex hidden">
+              <a
+                href="#home"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "home"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("home")}
+              >
+                Home
+              </a>
+
+              <a
+                href="#whyAvesto"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "whyAvesto"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("whyAvesto")}
+              >
+                Why Avesto?
+              </a>
+
+              <a
+                href="#features"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "features"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("features")}
+              >
+                Features
+              </a>
+
+              <a
+                href="#faq"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "faq"
+                    ? "font-bold leading-loose text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("faq")}
+              >
+                FAQ
+              </a>
+
+              <a
+                href="#contact"
+                className={`text-base text-black font-normal leading-[27px] ${
+                  activeLink === "contact"
+                    ? "font-bold active:leading-loose active:text-rose-800"
+                    : ""
+                }`}
+                onClick={() => handleLinkClick("contact")}
+              >
+                Get in Touch
+              </a>
+            </nav>
+          </div>
         </div>
-        <nav className="justify-start items-center gap-16 lg:inline-flex hidden">
-          <a
-            href="#home"
-            className={`text-base text-black font-normal leading-[27px] ${
-              activeLink === "home"
-                ? "font-bold leading-loose text-rose-800"
-                : ""
-            }`}
-            onClick={() => handleLinkClick("home")}
-          >
-            Home
-          </a>
-
-          <a
-            href="#whyAvesto"
-            className={`text-base text-black font-normal leading-[27px] ${
-              activeLink === "whyAvesto"
-                ? "font-bold leading-loose text-rose-800"
-                : ""
-            }`}
-            onClick={() => handleLinkClick("whyAvesto")}
-          >
-            Why Avesto?
-          </a>
-
-          <a
-            href="#features"
-            className={`text-base text-black font-normal leading-[27px] ${
-              activeLink === "features"
-                ? "font-bold leading-loose text-rose-800"
-                : ""
-            }`}
-            onClick={() => handleLinkClick("features")}
-          >
-            Features
-          </a>
-          <a
-            href="#faq"
-            className={`text-base text-black font-normal leading-[27px] ${
-              activeLink === "faq"
-                ? "font-bold leading-loose text-rose-800"
-                : ""
-            }`}
-            onClick={() => handleLinkClick("faq")}
-          >
-            FAQ
-          </a>
-          <a
-            href="#contact"
-            className={`text-base text-black font-normal leading-[27px] ${
-              activeLink === "contact"
-                ? "font-bold active:leading-loose active:text-rose-800"
-                : ""
-            }`}
-            onClick={() => handleLinkClick("contact")}
-          >
-            Get in Touch
-          </a>
-        </nav>
         <Link
           to="/signin"
-          className="px-3.5 py-2.5 sm:px-10 sm:py-4 bg-gradient-to-br from-red-600 to-fuchsia-950 rounded-sm  text-white text-xs font-extrabold  leading- animate-pulse"
+          className="px-3.5 py-2.5 sm:px-10 sm:py-4 bg-gradient-to-br from-red-600 to-fuchsia-950 rounded-sm  text-white text-xs font-extrabold animate-pulse"
         >
           Get Started
         </Link>
+        {/*menu*/}
+        <Menu />
       </nav>
 
       {/* main content */}
       <main>
         <div className="w-[90%] m-auto my-24">
           {/* home */}
-          <section id="home" className="pt-10">
+          <section id="home" className="">
             <div className="text-center py-12  ">
               <h2 className="text-center text-rose-800 text-[32px] lg:text-6xl font-bold  leading-10  ">
                 Simplified Investing Just <br /> for you.
               </h2>
-              <p className="text-zinc-900 text-sm md:text-lg font-normal  my-8">
+              <h2 className="text-zinc-900 text-base md:text-lg font-normal  my-8">
                 Set out on your financial adventure with assurance, where
                 maneuvering through the complexities of finance <br /> feels
                 like a gentle breeze!
-              </p>
+              </h2>
 
               <Link to="/">
                 <div className="gap-5 flex justify-center">
@@ -164,10 +169,10 @@ const LandingPage = () => {
               <h2 className="text-center leading-10 lg:text-5xl text-[32px]">
                 Our Best Services <br /> For Your Convenience.
               </h2>
-              <p className="text-zinc-900 text-sm lg:text-base font-normal  my-8">
+              <p className="text-zinc-900 text-base lg:text-base font-normal  my-8">
                 Enjoy unbeatable convenience with our amazing services! We've
-                got you covered with <br /> top-notch options, making sure
-                everything fits your className effortlessly.
+                got you covered with top-notch options, making sure everything
+                fits your className effortlessly.
               </p>
               <img className="m-auto" src={line} alt="line" />
 
@@ -214,7 +219,7 @@ const LandingPage = () => {
                 <h2 className="text-2xl lg:text-5xl">
                   These are reasons why you should use <br /> Avesto
                 </h2>
-                <p className="text-zinc-900 text-sm lg:text-base font-normal leading-[27px] my-6">
+                <p className="text-zinc-900 text-base lg:text-base font-normal leading-[27px] my-6">
                   Unlock and secure your financial potential here!
                 </p>
                 <img className="m-auto" src={line} alt="line" />
@@ -279,20 +284,19 @@ const LandingPage = () => {
               </h2>
               <p className="my-8">
                 Open the doors to amazing vibes and dope features! Experience a
-                world of <br /> awesomeness waiting for you to explore and
-                enjoy.
+                world of awesomeness waiting for you to explore and enjoy.
               </p>
               <img className="m-auto" src={line} alt="line" />
             </div>
 
             {/* not completed yet */}
-            <div className="bg-rose-800 py-14  md:flex relative ">
-              <div className="pl-28">
+            <div className="bg-rose-800 py-14 md:flex px-10 relative">
+              <div className="">
                 <img src={lightInbox} alt="lightInbox" />
-                <h2 className="text-white text-2xl font-semibold my-8">
+                <h2 className="text-white text-2xl font-semibold my-8 ">
                   Personalized Investment
                 </h2>
-                <p className="text-white my-8">
+                <p className="text-white my-8 pr-5">
                   Designing a financial future specifically for you step into
                   the realm of personalized investment excellence
                 </p>
@@ -302,7 +306,7 @@ const LandingPage = () => {
                   className="absolute bottom-14 left-28"
                 />
               </div>
-              <div className="w-[258.44px] h-[374px] mx-10 sm:mx-40 items-center gap-[20.12px] inline-flex">
+              <div className="w-[258.44px] h-[374px] mx-auto  items-center gap-[20.12px] inline-flex">
                 <img
                   src=""
                   alt="personalize img"
@@ -377,7 +381,7 @@ const LandingPage = () => {
             <div className="flex flex-col gap-4">
               {/* Logo */}
               <img src="logo.png" className="w-24 h-auto" alt="Logo" />
-              <p className="text-white text-sm font-normal leading-[1.6875rem] w-[297px]">
+              <p className="text-white text-base font-normal leading-[1.6875rem] w-[297px]">
                 A marketplace that sells various types of work by professional
                 designers and is paid with NFT tokens.
               </p>

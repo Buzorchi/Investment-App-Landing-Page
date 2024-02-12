@@ -1,22 +1,57 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import email from "../assets/codicon_mail (1).svg";
 import password from "../assets/bx_bxs-lock-alt (1).svg";
 import eyeHideIcon from "../assets/eyeHideIcon.svg";
 import eyeShowIcon from "../assets/eyeShowIcon.svg";
-import signupImg from "../assets/signup-img.png"
+import signupImg from "../assets/signup-img.png";
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleLogin = async (values, { setSubmitting }) => {
+    try {
+      const response = await axios.post(
+        "https://69c8-155-93-95-78.ngrok-free.app/api/User/login",
+        {
+          email: values.email,
+          password: values.password,
+        }
+      );
+      if (response.status !== 200) {
+        console.log("Login failed", response.data.message);
+        setError(response.data.message);
+        setSubmitting(false);
+        return;
+      }
+      navigate("/");
+      console.log("response from login", response.data);
+    } catch (error) {
+      console.error("Login failed", error);
+      setError("An error occurred while logging in.");
+      setSubmitting(false);
+    }
+  };
   return (
     <div>
       <div className="w-full  md:flex">
         <div className="hidden md:flex flex-1 bg-gradient-to-b from-red-600 to-fuchsia-950 justify-center items-center">
-            <div className="flex flex-col justify-center items-center h-screen max-w-screen-xl mx-auto">
-        <img src="" alt="logo" className="w-[146px] h-[72px] bg-white mt-10"/>
-        <img src={signupImg} alt="signup img" className="w-[386px] h-[390px] mt-14" />
-            </div>
+          <div className="flex flex-col justify-center items-center h-screen max-w-screen-xl mx-auto">
+            <img
+              src=""
+              alt="logo"
+              className="w-[146px] h-[72px] bg-white mt-10"
+            />
+            <img
+              src={signupImg}
+              alt="signup img"
+              className="w-[386px] h-[390px] mt-14"
+            />
+          </div>
         </div>
         <div className="md:flex-1 bg-white pt-10">
           <div className=" self-stretch">
@@ -47,12 +82,7 @@ const SignIn = () => {
                   }
                   return errors;
                 }}
-                onSubmit={(values, { setSubmitting }) => {
-                  setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
-                    setSubmitting(false);
-                  }, 400);
-                }}
+                onSubmit={handleLogin}
               >
                 {({
                   values,
@@ -135,6 +165,9 @@ const SignIn = () => {
                                 touched.password &&
                                 errors.password}
                             </div>
+                          </div>
+                          <div>
+                            {errors && <p className="text-red-500">{error}</p>}
                           </div>
                           <button
                             type="submit"

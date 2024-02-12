@@ -11,7 +11,7 @@ const Form = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showOTPModal, setShowOTPModal] = useState(false);
-  
+
   // Function to check password conditions
   const isPasswordValid = (password) => {
     // Add your password conditions here
@@ -28,7 +28,7 @@ const Form = () => {
     try {
       // Make API call using Axios
       const response = await axios.post(
-        "https://2a98-102-88-83-196.ngrok-free.app/api/User/register",
+        "https://69c8-155-93-95-78.ngrok-free.app/api/User/register",
         values
       );
       if (response.status !== 200) {
@@ -70,24 +70,26 @@ const Form = () => {
   //   }
   // };
 
-  const handleOTPVerification = async (otp, {setErrors}) => {
+  const handleOTPVerification = async (otp) => {
     try {
       // Make API call to verify OTP
-      const response = await axios.post("https://your-api-url/verify-otp", { otp });
+      const response = await axios.post(
+        "https://69c8-155-93-95-78.ngrok-free.app/api/User/validate",
+        { otp }
+      );
       if (response.status !== 200) {
         // Handle OTP verification error
         console.log("OTP verification failed:", response.data.message);
-        setErrors(response.data.errors);
+        // setErrors(response.data.errors);
         return;
       }
 
       // If OTP verification successful, navigate to landing page
-      navigate("/landing-page");
+      navigate("/signin");
     } catch (error) {
       console.error("Error occurred during OTP verification:", error);
     }
   };
-
 
   return (
     <div>
@@ -311,8 +313,8 @@ const Form = () => {
         )}
       </Formik>
 
-       {/* OTP Verification Modal */}
-       <OTPVerificationModal
+      {/* OTP Verification Modal */}
+      <OTPVerificationModal
         show={showOTPModal}
         onClose={() => setShowOTPModal(false)}
         onVerify={handleOTPVerification}

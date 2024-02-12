@@ -8,6 +8,7 @@ import eyeShowIcon from "../assets/eyeShowIcon.svg";
 
 const Form = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showOTPModal, setShowOTPModal] = useState(false);
@@ -21,16 +22,22 @@ const Form = () => {
     return regex.test(password);
   };
 
+  console.log(loading);
+
   const handleSignUp = async (
     values,
     { setSubmitting, setErrors, resetForm }
   ) => {
     try {
       // Make API call using Axios
+
       const response = await axios.post(
-        "https://69c8-155-93-95-78.ngrok-free.app/api/User/register",
+        "https://bitgrouponebackendwebapp.azurewebsites.net/api/User/register",
         values
       );
+
+      setLoading(true);
+      console.log(loading);
       if (response.status !== 200) {
         // Handle error response
         console.log(
@@ -39,6 +46,7 @@ const Form = () => {
         );
         setErrors(response.data.errors);
         setSubmitting(false);
+        setLoading(false);
         return;
       }
 
@@ -46,6 +54,8 @@ const Form = () => {
       setShowOTPModal(true);
     } catch (error) {
       console.error("Error occurred:", error);
+
+      setLoading(false);
       setSubmitting(false);
     }
   };
@@ -74,7 +84,7 @@ const Form = () => {
     try {
       // Make API call to verify OTP
       const response = await axios.post(
-        "https://69c8-155-93-95-78.ngrok-free.app/api/User/validate",
+        "https://bitgrouponebackendwebapp.azurewebsites.net/api/User/validate",
         { otp }
       );
       if (response.status !== 200) {
@@ -90,6 +100,8 @@ const Form = () => {
       console.error("Error occurred during OTP verification:", error);
     }
   };
+
+
 
   return (
     <div>
@@ -307,7 +319,7 @@ const Form = () => {
               disabled={formikProps.isSubmitting}
               className="w-full px-4 py-[19px] bg-gradient-to-b from-red-600 to-fuchsia-950 rounded-sm justify-center items-center gap-2.5 inline-flex text-white text-base font-semibold"
             >
-              Get Started
+              {loading ? "Please wait" : "Get Started"}
             </button>
           </form>
         )}

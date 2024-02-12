@@ -13,6 +13,9 @@ import rightArrow from "../assets/landingPage/Arrow.svg";
 import safety from "../assets/landingPage/safety.png";
 import googleIcon from "../assets/landingPage/logos_google-play-icon.svg";
 import appleIcon from "../assets/landingPage/apple-icon.svg";
+import logo from "../assets/landingPage/raiser.svg";
+import logoWhite from "../assets/landingPage/raiserWhite.svg";
+import alat from "../assets/landingPage/alat.png";
 import FAQ from "../component/FAQ";
 
 const LandingPage = () => {
@@ -24,14 +27,10 @@ const LandingPage = () => {
 
   return (
     <div className="absolute">
-      <nav className="navbar fixed top-0 w-full bg-white z-10 transition-all duration-700 py-2 px-5 border-b-2 border-neutral-100 justify-between  items-center  inline-flex">
+      <nav className="navbar fixed top-0 w-full bg-white z-10 transition-all duration-700 py-2 px-5 border-b-2 border-neutral-100 justify-between items-center inline-flex">
         <div className="flex items-center gap-20">
           {/* logo */}
-          <img
-            className="w-[84px] h-[31px] md:w-[185px] md:h-[61px] bg-zinc-300"
-            src=""
-            alt="logo"
-          />
+          <img className="" src={logo} alt="logo" />
 
           <div>
             <nav className="justify-start items-center gap-16 lg:inline-flex hidden">
@@ -99,7 +98,7 @@ const LandingPage = () => {
         </div>
         <Link
           to="/signin"
-          className="px-3.5 py-2.5 sm:px-10 sm:py-4 bg-gradient-to-br from-red-600 to-fuchsia-950 rounded-sm  text-white text-xs font-extrabold animate-pulse"
+          className="hidden lg:block px-3.5 py-2.5 sm:px-10 sm:py-4 bg-gradient-to-br from-red-600 to-fuchsia-950 rounded-sm  text-white text-xs font-extrabold animate-pulse"
         >
           Get Started
         </Link>
@@ -377,14 +376,14 @@ const LandingPage = () => {
 
         {/* footer */}
         <footer id="contact" className="bg-rose-800">
-          <div className="container mx-auto py-8 flex flex-wrap gap-20 items-center px-10">
+          <div className="container mx-auto py-10 flex flex-wrap gap-72 items-center px-10">
             <div className="flex flex-col gap-4">
               {/* Logo */}
-              <img src="logo.png" className="w-24 h-auto" alt="Logo" />
-              <p className="text-white text-base font-normal leading-[1.6875rem] w-[297px]">
+              <img src={logoWhite} className="w-24 h-auto" alt="Logo" />
+              <h3 className="text-white leading-[1.6875rem] w-[297px]">
                 A marketplace that sells various types of work by professional
                 designers and is paid with NFT tokens.
-              </p>
+              </h3>
             </div>
             <div className="inline-flex gap-36 pt-10">
               <div className="flex flex-col gap-5">
@@ -427,10 +426,16 @@ const LandingPage = () => {
             </div>
           </div>
           <div className="text-white text-opacity-50 text-base font-normal flex justify-between px-10 pb-4 items-center gap-4">
-            <span>Copyright &copy; 2024 Avesto</span>
-            <div className="flex gap-2">
-              <span>Privacy</span>
-              <span>Security Terms</span>
+            <div className="flex items-center gap-5">
+              <h3 className="text-white">Powered by</h3>
+              <img src={alat} alt="alat logo" className="w-10" />
+            </div>
+            <h3 className="text-white">
+              &copy; ALAT, Inc 2024. All rights reserved.
+            </h3>
+            <div className="flex gap-2 text-white">
+              <h3>Privacy</h3>
+              <h3>Security Terms</h3>
             </div>
           </div>
         </footer>

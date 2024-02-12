@@ -119,9 +119,10 @@ const Menu = () => {
                 Get in Touch
               </a>
             </li>
+
             <Link
               to="/signin"
-              className="px-3.5 py-2.5 sm:px-10 sm:py-4 bg-gradient-to-br from-red-600 to-fuchsia-950 rounded-sm  text-white text-xs font-extrabold animate-pulse"
+              className="px-3 py-2 bg-gradient-to-br from-red-600 to-fuchsia-950 rounded-sm text-white text-xs font-extrabold animate-pulse"
             >
               Get Started
             </Link>

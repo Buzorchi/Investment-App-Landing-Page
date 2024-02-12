@@ -7,6 +7,8 @@ import password from "../assets/bx_bxs-lock-alt (1).svg";
 import eyeHideIcon from "../assets/eyeHideIcon.svg";
 import eyeShowIcon from "../assets/eyeShowIcon.svg";
 import signupImg from "../assets/signup-img.png";
+import logoWhite from "../assets/landingPage/raiserWhite.svg";
+import alat from "../assets/landingPage/alat.png";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -16,7 +18,7 @@ const SignIn = () => {
   const handleLogin = async (values, { setSubmitting }) => {
     try {
       const response = await axios.post(
-        "https://69c8-155-93-95-78.ngrok-free.app/api/User/login",
+        "https://bitgrouponebackendwebapp.azurewebsites.net//api/User/login",
         {
           email: values.email,
           password: values.password,
@@ -40,23 +42,20 @@ const SignIn = () => {
     <div>
       <div className="w-full  md:flex">
         <div className="hidden md:flex flex-1 bg-gradient-to-b from-red-600 to-fuchsia-950 justify-center items-center">
-          <div className="flex flex-col justify-center items-center h-screen max-w-screen-xl mx-auto">
-            <img
-              src=""
-              alt="logo"
-              className="w-[146px] h-[72px] bg-white mt-10"
-            />
+          <div className="flex flex-col justify-center items-center h-screen max-w-screen-xl mx-auto pt-10">
+            <img src={logoWhite} alt="logo" className="w-40" />
+            <img src={alat} alt="alat logo" className="w-10 pt-5" />
             <img
               src={signupImg}
               alt="signup img"
-              className="w-[386px] h-[390px] mt-14"
+              className="w-[386px] h-[] mt-5"
             />
           </div>
         </div>
-        <div className="md:flex-1 bg-white pt-10">
+        <div className="md:flex-1 bg-white pt-20">
           <div className=" self-stretch">
             {/* logo */}
-            <img className="w-[72px] h-[72px] m-auto bg-zinc-300" alt="logo" />
+            {/* <img src={logo} className="m-auto" alt="logo" /> */}
 
             <div className="flex-col justify-start items-center flex">
               <div className="flex-col justify-start items-center gap-2 flex">

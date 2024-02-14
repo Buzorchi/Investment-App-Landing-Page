@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import OTPVerificationModal from "./OTPVerificationModal";
 import eyeHideIcon from "../assets/eyeHideIcon.svg";
 import eyeShowIcon from "../assets/eyeShowIcon.svg";
+import "react-toastify/dist/ReactToastify.css";
 
 const Form = () => {
   const navigate = useNavigate();
@@ -12,6 +14,7 @@ const Form = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showOTPModal, setShowOTPModal] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   // Function to check password conditions
   const isPasswordValid = (password) => {
@@ -22,89 +25,70 @@ const Form = () => {
     return regex.test(password);
   };
 
-  console.log(loading);
-
-  const handleSignUp = async (
-    values,
-    { setSubmitting, setErrors, resetForm }
-  ) => {
+  // handle signup
+  const handleSignUp = async (values, { setSubmitting }) => {
     try {
-      // Make API call using Axios
-
+      setLoading(true);
       const response = await axios.post(
-        "https://bitgrouponebackendwebapp.azurewebsites.net/api/User/register",
+        "https://bit-group-one-back-end.azurewebsites.net/api/User/register",
         values
       );
 
-      setLoading(true);
-      console.log(loading);
-      if (response.status !== 200) {
-        // Handle error response
-        console.log(
-          "Error response received from server:",
-          response.data.errors
-        );
-        setErrors(response.data.errors);
-        setSubmitting(false);
-        setLoading(false);
-        return;
+      if (response.status === 200) {
+        setUserEmail(values.email);
+        setShowOTPModal(true);
       }
-
-      // If registration successful, show OTP verification modal
-      setShowOTPModal(true);
+      setLoading(false);
+      setSubmitting(false);
     } catch (error) {
-      console.error("Error occurred:", error);
-
+      toast(error?.response?.data?.message);
       setLoading(false);
       setSubmitting(false);
     }
   };
-  //     // If successful response
-  //     // If successful registration, move to the signup
-  //     const { message } = response.data;
-  //     console.log("message", message);
-  //     if (message === "User registered successfully") {
-  //       // Redirect to OTP page
-  //       navigate("/"); // Change "/otp" to the actual route of your OTP page
-  //     } else {
-  //       // Handle other messages
-  //       console.log(message);
-  //     }
-  //     alert("Sign up successful!");
-  //     resetForm();
-  //     setSubmitting(false);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error("Error occurred:", error);
-  //     setSubmitting(false);
-  //   }
-  // };
 
+  // handle otp verification
   const handleOTPVerification = async (otp) => {
     try {
-      // Make API call to verify OTP
+      setLoading(true);
       const response = await axios.post(
-        "https://bitgrouponebackendwebapp.azurewebsites.net/api/User/validate",
+        "https://bit-group-one-back-end.azurewebsites.net/api/User/validate",
         { otp }
       );
-      if (response.status !== 200) {
-        // Handle OTP verification error
-        console.log("OTP verification failed:", response.data.message);
-        // setErrors(response.data.errors);
-        return;
+      if (response.status === 200) {
+        navigate("/signin");
       }
-
-      // If OTP verification successful, navigate to landing page
-      navigate("/signin");
+      setLoading(false);
     } catch (error) {
-      console.error("Error occurred during OTP verification:", error);
+      toast(error?.response?.data?.message);
+      setLoading(false);
     }
   };
 
-
+  const handleResendOTP = async () => {
+    try {
+      setLoading(true);
+      if (!userEmail) {
+        console.log("Email is empty");
+        return;
+      }
+      const response = await axios.post(
+        "https://bit-group-one-back-end.azurewebsites.net/api/User/resend-otp",
+        { email: userEmail }
+      );
+      if (response === 200) {
+        // If resend-OTP  successful, navigate to resendotp page
+        navigate("/resendotp");
+        // setShowOTPModal(true);
+      }
+    } catch (error) {
+      toast(error?.response?.data?.message);
+      setLoading(false);
+    }
+  };
 
   return (
-    <div>
+    <div className="">
       <Formik
         initialValues={{
           firstName: "",
@@ -116,7 +100,6 @@ const Form = () => {
         }}
         validate={(values) => {
           const errors = {};
-          console.log("Validating form values:", values);
           // First Name validation
           if (!values.firstName) {
             errors.firstName = "First name is required";
@@ -148,17 +131,19 @@ const Form = () => {
             errors.password = "Password is required";
           } else if (!isPasswordValid(values.password)) {
             errors.password =
-              "Password must have at least 8 characters, one uppercase letter,one special character one lowercase letter, and one digit";
+              "Password must have at least 8 characters, one uppercase letter,one special character, one lowercase letter and one digit";
           }
 
           // Confirm Password validation
           if (values.password !== values.confirmPassword) {
             errors.confirmPassword = "Passwords do not match";
           }
-
           return errors;
         }}
-        onSubmit={handleSignUp}
+        // onSubmit={handleSignUp}
+        onSubmit={(values, formikProps) => {
+          handleSignUp(values, formikProps);
+        }}
       >
         {(formikProps) => (
           <form onSubmit={formikProps.handleSubmit} className="">
@@ -317,19 +302,32 @@ const Form = () => {
             <button
               type="submit"
               disabled={formikProps.isSubmitting}
-              className="w-full px-4 py-[19px] bg-gradient-to-b from-red-600 to-fuchsia-950 rounded-sm justify-center items-center gap-2.5 inline-flex text-white text-base font-semibold"
+              className="w-full px-4 py-[10px] bg-gradient-to-b from-red-600 to-fuchsia-950 rounded-sm justify-center items-center gap-2.5 inline-flex text-white text-base font-semibold"
             >
-              {loading ? "Please wait" : "Get Started"}
+              {loading ? "Please wait..." : "Get Started"}
             </button>
           </form>
         )}
       </Formik>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={true}
+        progress={undefined}
+        theme="dark"
+      />
 
       {/* OTP Verification Modal */}
       <OTPVerificationModal
         show={showOTPModal}
         onClose={() => setShowOTPModal(false)}
         onVerify={handleOTPVerification}
+        onResend={() => handleResendOTP()}
+        loading={loading}
+        // resendingOTP={resendingOTP}
       />
     </div>
   );

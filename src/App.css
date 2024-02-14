@@ -8,9 +8,10 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: "Lato", sans-serif;
+  /* font-family: "Lato", sans-serif; */
   overflow: hidden;
   overscroll-behavior: none;
+  /* max-width: 1440px; */
 }
 /* #menuContent {
   background-color: white;

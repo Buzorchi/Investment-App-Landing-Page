@@ -1,19 +1,24 @@
 import React, { useRef, useState } from "react";
 
-const OTPVerificationModal = ({ show, onClose, onVerify }) => {
-  const [otp, setOTP] = useState(["", "", "", "", "", ""]);
+const OTPVerificationModal = ({ show, onClose, onVerify, onResend}) => {
+  const [otp, setOTP] = useState("");
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false)
   const inputsRef = useRef([]);
+
+  let otpString;
 
   const handleVerifyOTP = () => {
     // Basic validation for OTP
-    if (!otp) {
+    otpString = otp.join("");
+
+    if (!otpString) {
       setError("Please enter the OTP.");
       return;
     }
 
     // Pass the entered OTP back to the parent component for verification
-    onVerify(otp);
+    onVerify(otpString);
   };
 
   const handleChange = (index, event) => {
@@ -34,7 +39,7 @@ const OTPVerificationModal = ({ show, onClose, onVerify }) => {
     }
   };
 
-  return (
+ return (
     <div className={`modal ${show ? "block" : "hidden"}`}>
       <div className="modal-overlay bg-gray-900 opacity-50 fixed inset-0 z-50"></div>
       <div className="modal-container  fixed w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-md p-8 z-50 overflow-y-auto bg-white shadow-lg rounded-md">
@@ -62,12 +67,13 @@ const OTPVerificationModal = ({ show, onClose, onVerify }) => {
           <div className="modal-body">
             <div className="mb-10">
               <h3 className="text-center text-zinc-900 text-base font-semibold leading-normal">
-                Please enter the One-Time Password to Verify your account
+                Please enter the One-Time Password send to your email to Verify
+                your account
               </h3>
             </div>
             <div className="flex justify-center items-center">
               <input
-                type="text"
+                type="number"
                 maxLength="1"
                 value={otp[0]}
                 onChange={(event) => handleChange(0, event)}
@@ -81,7 +87,7 @@ const OTPVerificationModal = ({ show, onClose, onVerify }) => {
                 }}
               />
               <input
-                type="text"
+                type="number"
                 maxLength="1"
                 value={otp[1]}
                 onChange={(event) => handleChange(1, event)}
@@ -94,10 +100,9 @@ const OTPVerificationModal = ({ show, onClose, onVerify }) => {
                   textAlign: "center",
                 }}
               />
-              {/* Repeat this for the remaining input fields */}
               {/* input 2 */}
               <input
-                type="text"
+                type="number"
                 maxLength="1"
                 value={otp[2]}
                 onChange={(event) => handleChange(2, event)}
@@ -112,7 +117,7 @@ const OTPVerificationModal = ({ show, onClose, onVerify }) => {
               />
               {/* input 3 */}
               <input
-                type="text"
+                type="number"
                 maxLength="1"
                 value={otp[3]}
                 onChange={(event) => handleChange(3, event)}
@@ -127,7 +132,7 @@ const OTPVerificationModal = ({ show, onClose, onVerify }) => {
               />
               {/* input 4 */}
               <input
-                type="text"
+                type="number"
                 maxLength="1"
                 value={otp[4]}
                 onChange={(event) => handleChange(4, event)}
@@ -142,7 +147,7 @@ const OTPVerificationModal = ({ show, onClose, onVerify }) => {
               />
               {/* input 5 */}
               <input
-                type="text"
+                type="number"
                 maxLength="1"
                 value={otp[5]}
                 onChange={(event) => handleChange(5, event)}
@@ -164,14 +169,18 @@ const OTPVerificationModal = ({ show, onClose, onVerify }) => {
               onClick={handleVerifyOTP}
               className="w-full px-4 py-2 bg-gradient-to-br from-red-600 to-fuchsia-950 justify-center items-center gap-2.5 inline-flex text-white rounded-md hover:bg-red-700 focus:outline-none"
             >
-              Verify
+              {loading ? "Verifying..." : "Verify"}
+              {/* Verify */}
             </button>
           </div>
           <h3 class="text-zinc-900 font-semibold mt-10 flex justify-center items-center">
             Didn’t get the OTP?{" "}
-            <a href="" className="text-red-700">
+            <button
+              className="text-red-700"
+              onClick={onResend}
+            >
               Resend OTP
-            </a>
+            </button>
           </h3>
         </div>
       </div>

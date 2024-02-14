@@ -34,11 +34,11 @@ const SignUp = () => {
           {/* add logo */}
           <img className="mb-5" src={logo} alt="logo" />
 
-          <p className="text-stone-950 text-2xl font-bold bg-gradient-to-r from-[#CD2128] to-[#490C3C] text-transparent bg-clip-text ">
+          <p className="text-stone-950 text-2xl font-bold bg-gradient-to-r from-[#CD2128] to-[#490C3C] text-transparent bg-clip-text">
             Create an account
           </p>
-          <p className="text-stone-950 text-base font-normal ">
-            Sign up to ---
+          <p className="text-stone-950 text-base font-normal">
+            Sign up to Raiser
           </p>
         </header>
 

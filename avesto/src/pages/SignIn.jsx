@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 import email from "../assets/codicon_mail (1).svg";
 import password from "../assets/bx_bxs-lock-alt (1).svg";
 import eyeHideIcon from "../assets/eyeHideIcon.svg";
@@ -14,30 +15,32 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false)
 
-  const handleLogin = async (values, { setSubmitting }) => {
-    try {
-      const response = await axios.post(
-        "https://69c8-155-93-95-78.ngrok-free.app/api/User/login",
-        {
-          email: values.email,
-          password: values.password,
-        }
-      );
-      if (response.status !== 200) {
-        console.log("Login failed", response.data.message);
-        setError(response.data.message);
-        setSubmitting(false);
-        return;
+  const handleLogin = async(values, {setSubmitting}) => {
+    try{
+      setLoading(true)
+      const response = await axios.post("https://bit-group-one-back-end.azurewebsites.net/api/User/login", {
+        email: values.email,
+        password: values.password
       }
-      navigate("/");
-      console.log("response from login", response.data);
-    } catch (error) {
-      console.error("Login failed", error);
+      );
+      if(response.status !== 200){
+        console.log("Login failed", response.data.message)
+        toast(error?.response?.data?.message)
+        setError(response.data.message);
+        setSubmitting(false)
+        setLoading(false)
+      }
+      navigate("/")
+    } catch(error){
+      console.log("Login failed", error)
+      toast(error?.response?.data?.message)
       setError("An error occurred while logging in.");
-      setSubmitting(false);
+      setLoading(false)
+      setSubmitting(false)
     }
-  };
+  }
   return (
     <div>
       <div className="w-full  md:flex">
@@ -54,9 +57,6 @@ const SignIn = () => {
         </div>
         <div className="md:flex-1 bg-white pt-20">
           <div className=" self-stretch">
-            {/* logo */}
-            {/* <img src={logo} className="m-auto" alt="logo" /> */}
-
             <div className="flex-col justify-start items-center flex">
               <div className="flex-col justify-start items-center gap-2 flex">
                 <p className="bg-gradient-to-r from-[#CD2128] to-[#490C3C] inline-block text-transparent bg-clip-text text-[32px] font-bold mt-5">
@@ -91,7 +91,6 @@ const SignIn = () => {
                   handleBlur,
                   handleSubmit,
                   isSubmitting,
-                  /* and other goodies */
                 }) => (
                   <form onSubmit={handleSubmit}>
                     <div className="flex-col justify-start items-start flex px-9 ">
@@ -173,7 +172,8 @@ const SignIn = () => {
                             disabled={isSubmitting}
                             className="bg-gradient-to-r from-[#CD2128] to-[#490C3C] w-[336px] md:w-[400px] p-2 text-white text-base font-semibold rounded-sm justify-center items-center inline-flex"
                           >
-                            Login
+                            {loading ? "Please wait..." : "Login"}
+                            {/* Login */}
                           </button>
                         </div>
                         <div className="flex-col justify-start items-center gap-2 flex">
@@ -205,6 +205,16 @@ const SignIn = () => {
             </div>
           </div>
         </div>
+        <ToastContainer
+         position="top-center"
+         autoClose={3000}
+         hideProgressBar={false}
+         closeOnClick={true}
+         pauseOnHover={true}
+         draggable={true}
+         progress={undefined}
+         theme="dark"
+        />
       </div>
     </div>
   );

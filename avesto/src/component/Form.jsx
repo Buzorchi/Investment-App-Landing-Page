@@ -27,15 +27,15 @@ const Form = () => {
 
   // handle signup
   const handleSignUp = async (values, { setSubmitting }) => {
-    console.log(userEmail);
-    setUserEmail(userEmail);
     try {
       setLoading(true);
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/register",
         values
       );
+
       if (response.status === 200) {
+        setUserEmail(values.email);
         setShowOTPModal(true);
       }
       setLoading(false);
@@ -66,10 +66,12 @@ const Form = () => {
   };
 
   const handleResendOTP = async () => {
-    console.log(userEmail);
-    setUserEmail(userEmail);
     try {
       setLoading(true);
+      if (!userEmail) {
+        console.log("Email is empty");
+        return;
+      }
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/resend-otp",
         { email: userEmail }
@@ -77,6 +79,7 @@ const Form = () => {
       if (response === 200) {
         // If resend-OTP  successful, navigate to resendotp page
         navigate("/resendotp");
+        // setShowOTPModal(true);
       }
     } catch (error) {
       toast(error?.response?.data?.message);

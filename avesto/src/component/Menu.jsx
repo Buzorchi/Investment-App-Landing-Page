@@ -47,10 +47,10 @@ const Menu = () => {
       {isOpen && (
         <div
           id="menuContent"
-          className="absolute top-full right-0 mt-2 bg-gray-100 w-40 p-4"
+          className="absolute top-full right-0 my-2 bg-gray-100 w-40 p-4"
         >
           <ul>
-            <li>
+            <li className="pb-2">
               <a
                 href="#home"
                 className={`text-base text-black font-normal leading-[27px] ${
@@ -64,7 +64,7 @@ const Menu = () => {
               </a>
             </li>
 
-            <li>
+            <li className="pb-2">
               <a
                 href="#whyAvesto"
                 className={`text-base text-black font-normal leading-[27px] ${
@@ -78,7 +78,7 @@ const Menu = () => {
               </a>
             </li>
 
-            <li>
+            <li className="pb-2">
               <a
                 href="#features"
                 className={`text-base text-black font-normal leading-[27px] ${
@@ -92,7 +92,7 @@ const Menu = () => {
               </a>
             </li>
 
-            <li>
+            <li className="pb-2">
               <a
                 href="#faq"
                 className={`text-base text-black font-normal leading-[27px] ${
@@ -106,7 +106,7 @@ const Menu = () => {
               </a>
             </li>
 
-            <li>
+            <li className="pb-2">
               <a
                 href="#contact"
                 className={`text-base text-black font-normal leading-[27px] ${

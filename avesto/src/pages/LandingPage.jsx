@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Menu from "../component/Menu";
 import { Link } from "react-router-dom";
+import FAQ from "../component/FAQ";
 import all from "../assets/landingPage/allInOne.png";
 import blackArrow from "../assets/landingPage/blackArrow.svg";
 import dollar from "../assets/landingPage/dollar.svg";
 import easy from "../assets/landingPage/easy.png";
-import phone from "../assets/landingPage/phoneLg.png";
 import layers from "../assets/landingPage/layers.svg";
 import lightInbox from "../assets/landingPage/light_inbox.svg";
 import line from "../assets/landingPage/line.svg";
@@ -13,8 +13,14 @@ import rightArrow from "../assets/landingPage/Arrow.svg";
 import safety from "../assets/landingPage/safety.png";
 import googleIcon from "../assets/landingPage/logos_google-play-icon.svg";
 import appleIcon from "../assets/landingPage/apple-icon.svg";
-import logo from "../assets/landingPage/raiser.svg"
-import FAQ from "../component/FAQ";
+import logo from "../assets/landingPage/raiser.svg";
+import logoWhite from "../assets/landingPage/raiserWhite.svg";
+import alat from "../assets/landingPage/alat.png";
+import groupInvestment from "../assets/landingPage/groupinvestment.png";
+import getToKnow from "../assets/landingPage/Get to know 1.svg";
+import experience from "../assets/landingPage/Experience.png";
+import interest from "../assets/landingPage/Interest.png";
+import DollarInvestment from "../assets/landingPage/DollarInvestment.svg";
 
 const LandingPage = () => {
   const [activeLink, setActiveLink] = useState("");
@@ -24,15 +30,12 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="absolute">
-      <nav className="navbar fixed top-0 w-full bg-white z-10 transition-all duration-700 py-2 px-5 border-b-2 border-neutral-100 justify-between items-center inline-flex">
+    <div className="">
+      {/* max-w-[1440px] w-full mx-auto  */}
+      <nav className="navbar max-w-[1440px] w-full fixed top-0 bg-white z-10 transition-all duration-700 py-2 px-7 border-b-2 border-neutral-100 justify-between items-center inline-flex">
         <div className="flex items-center gap-20">
           {/* logo */}
-          <img
-            className=""
-            src={logo}
-            alt="logo"
-          />
+          <img className="" src={logo} alt="logo" />
 
           <div>
             <nav className="justify-start items-center gap-16 lg:inline-flex hidden">
@@ -110,14 +113,15 @@ const LandingPage = () => {
 
       {/* main content */}
       <main>
-        <div className="w-[90%] m-auto my-24">
+        <div className="my-24 w-[90%] mx-auto">
+          {/* w-[90%] mx-auto my-24 */}
           {/* home */}
           <section id="home" className="">
             <div className="text-center py-12  ">
               <h2 className="text-center text-rose-800 text-[32px] lg:text-6xl font-bold  leading-10  ">
                 Simplified Investing Just <br /> for you.
               </h2>
-              <h2 className="text-zinc-900 text-base md:text-lg font-normal  my-8">
+              <h2 className="text-zinc-900 text-base md:text-lg font-normal my-8">
                 Set out on your financial adventure with assurance, where
                 maneuvering through the complexities of finance <br /> feels
                 like a gentle breeze!
@@ -287,74 +291,62 @@ const LandingPage = () => {
                 Open the doors to amazing vibes and dope features! Experience a
                 world of awesomeness waiting for you to explore and enjoy.
               </p>
-              <img className="m-auto" src={line} alt="line" />
+              <img className="mx-auto" src={line} alt="line" />
             </div>
-
-            {/* not completed yet */}
-            <div className="bg-rose-800 py-14 md:flex px-10 relative">
-              <div className="">
+            {/* not completed */}
+            <div class="bg-rose-800 flex flex-col justify-center items-center gap-10 lg:flex-row lg:justify-around">
+              <div class="pt-5">
                 <img src={lightInbox} alt="lightInbox" />
-                <h2 className="text-white text-2xl font-semibold my-8 ">
+                <h2 class=" text-white font-semibold leading-[55.50px] py-10">
                   Personalized Investment
                 </h2>
-                <p className="text-white my-8 pr-5">
+                <p class="w-[312px] text-white text-base font-normal leading-normal">
                   Designing a financial future specifically for you step into
                   the realm of personalized investment excellence
                 </p>
-                <img
-                  src={rightArrow}
-                  alt="rightArrow"
-                  className="absolute bottom-14 left-28"
-                />
               </div>
-              <div className="w-[258.44px] h-[374px] mx-auto  items-center gap-[20.12px] inline-flex">
+              <div className="inline-flex justify-center items-center lg:gap-[20px] gap-5">
                 <img
-                  src=""
-                  alt="personalize img"
-                  className="w-[119.16px] h-[181.77px]  bg-zinc-300 rounded-[0.86px] shadow border-rose-800"
+                  src={getToKnow}
+                  alt="get to know"
+                  className=" sm:h-[500px] h-[291px] pb-5"
                 />
-                <div className="w-[119.16px] h-[374px] flex-col justify-center items-start gap-[10.47px] inline-flex">
+                <div class="flex flex-col justify-center items-center gap-10">
                   <img
-                    src=""
-                    alt="personalized img"
-                    className="w-full h-[181.77px] bg-zinc-300 rounded-[0.86px] shadow border-rose-800"
+                    src={experience}
+                    alt="experience"
+                    className="h-[120px] lg:w-[254px] lg:h-[261px]"
                   />
                   <img
-                    src=""
-                    alt="personalized img"
-                    className="w-full h-[181.77px] bg-zinc-300 rounded-[0.86px] shadow border-rose-800"
+                    src={interest}
+                    alt="interest"
+                    className="lg:w-[254px] lg:h-[261px] h-[110px] "
                   />
                 </div>
               </div>
             </div>
 
-            {/* Need to edit this code; group investment */}
-            <div className="my-20 sm:flex justify-center items-center gap-28 bg-red-700 bg-opacity-5 rounded-sm  ">
+            <div className="py-5 my-20 sm:flex justify-center items-center gap-28 rounded-sm ">
               <div>
-                {/* <img
-                  className="m-auto mb-8 hidden"
-                  src={phone}
-                  alt="phone"
-                /> */}
-                <img
-                  src={phone}
-                  alt="phone on large screen"
-                  className="sm:w-[344px] sm:h-[344px] "
-                />
+                <img src={groupInvestment} alt="phone on large screen" />
               </div>
               <div className="ml-5 my-5">
-                <img src={layers} alt="layer" className="w-[50px] h-[30px] " />
+                <img
+                  src={layers}
+                  alt="layer"
+                  className="w-[50px] h-[30px] mt-10 "
+                />
                 <h2 className="my-8">Group Investment</h2>
                 <p className="mb-8">
-                  Dive into the power of collective growth <br /> with group
-                  investments where shared <br /> success becomes our shared
-                  journey!
+                  Dive into the power of collective growth with group
+                  investments where shared success becomes our shared journey!
                 </p>
                 <img src={blackArrow} alt="blackArrow" className="" />
               </div>
             </div>
 
-            <div className="bg-rose-800 py-14 px-4 sm:flex ">
+            {/* finish up */}
+            <div className="bg-rose-800 py-14 px-4 lg:flex ">
               <div className="ml-14">
                 <img src={dollar} alt="dollar" />
                 <h2 className="text-white text-2xl font-semibold mt-3">
@@ -365,29 +357,32 @@ const LandingPage = () => {
                   individual dollars into <br /> a pathway for financial
                   growth!.
                 </p>
-                <img src={rightArrow} alt="rightArrow" />
+                <img src={rightArrow} alt="rightArrow" className="pb-7" />
               </div>
 
               <div className="">
+                <img src={DollarInvestment} alt="dollar investment feature" />
                 {/* <div class="w-[874px] h-[538px] bg-stone-300 rounded-sm border-rose-100  "></div> */}
               </div>
             </div>
           </section>
+
+          {/* faq */}
           <FAQ />
         </div>
 
         {/* footer */}
         <footer id="contact" className="bg-rose-800">
-          <div className="container mx-auto py-8 flex flex-wrap gap-20 items-center px-10">
+          <div className="container mx-auto py-10 flex flex-wrap justify-between items-center px-10">
             <div className="flex flex-col gap-4">
               {/* Logo */}
-              <img src="logo.png" className="w-24 h-auto" alt="Logo" />
-              <p className="text-white text-base font-normal leading-[1.6875rem] w-[297px]">
+              <img src={logoWhite} className="w-24 h-auto" alt="Logo" />
+              <h3 className="text-white leading-[1.6875rem] w-[297px]">
                 A marketplace that sells various types of work by professional
                 designers and is paid with NFT tokens.
-              </p>
+              </h3>
             </div>
-            <div className="inline-flex gap-36 pt-10">
+            <div className="inline-flex gap-10 lg:gap-40 pt-10">
               <div className="flex flex-col gap-5">
                 <h4 className="text-white font-bold leading-loose">About Us</h4>
                 <p className="text-white text-xs font-normal leading-none">
@@ -427,11 +422,17 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-          <div className="text-white text-opacity-50 text-base font-normal flex justify-between px-10 pb-4 items-center gap-4">
-            <span>Copyright &copy; 2024 Avesto</span>
-            <div className="flex gap-2">
-              <span>Privacy</span>
-              <span>Security Terms</span>
+          <div className="text-white text-opacity-50 text-base font-normal block lg:flex justify-between px-10 pb-4 items-center">
+            <div className="flex items-center gap-5 pb-2">
+              <h3 className="text-white">Powered by</h3>
+              <img src={alat} alt="alat logo" className="w-10" />
+            </div>
+            <h3 className="text-white pb-2">
+              &copy; ALAT, Inc 2024. All rights reserved.
+            </h3>
+            <div className="flex gap-2 text-white">
+              <h3>Privacy</h3>
+              <h3>Security Terms</h3>
             </div>
           </div>
         </footer>

@@ -52,15 +52,15 @@ const LandingPage = () => {
               </a>
 
               <a
-                href="#whyAvesto"
+                href="#whyRaiser"
                 className={`text-base text-black font-normal leading-[27px] ${
-                  activeLink === "whyAvesto"
+                  activeLink === "whyRaiser"
                     ? "font-bold leading-loose text-rose-800"
                     : ""
                 }`}
-                onClick={() => handleLinkClick("whyAvesto")}
+                onClick={() => handleLinkClick("whyRaiser")}
               >
-                Why Avesto?
+                Why Raiser?
               </a>
 
               <a
@@ -168,8 +168,8 @@ const LandingPage = () => {
             </div>
           </section>
 
-          {/* why avesto */}
-          <section id="whyAvesto" className="pt-10">
+          {/* why Raiser */}
+          <section id="whyRaiser" className="pt-10">
             <div className="text-center py-12 ">
               <h2 className="text-center leading-10 lg:text-5xl text-[32px]">
                 Our Best Services <br /> For Your Convenience.
@@ -222,7 +222,7 @@ const LandingPage = () => {
             <section>
               <div className="my-10 text-center">
                 <h2 className="text-2xl lg:text-5xl">
-                  These are reasons why you should use <br /> Avesto
+                  These are reasons why you should use <br /> Raiser
                 </h2>
                 <p className="text-zinc-900 text-base lg:text-base font-normal leading-[27px] my-6">
                   Unlock and secure your financial potential here!
@@ -236,7 +236,7 @@ const LandingPage = () => {
                     Diversified Investment
                   </h2>
                   <p className="font-normal leading-[27px">
-                    Elevate your wealth game! Avesto offers a vibrant mix,
+                    Elevate your wealth game! Raiser offers a vibrant mix,
                     helping young Nigerians diversify smartly for a brighter,
                     more resilient financial future. Dare to diversify, thrive
                     together!
@@ -249,7 +249,7 @@ const LandingPage = () => {
                     Educational Resources
                   </h2>
                   <p>
-                    Empower your future! Avesto not only grows your wealth but
+                    Empower your future! Raiser not only grows your wealth but
                     also equips you with financial education resources,
                     empowering young Nigerians to make informed decisions and
                     thrive financially.
@@ -260,7 +260,7 @@ const LandingPage = () => {
                   <img src={easy} alt="easy" />
                   <h2 className="font-medium text-2xl my-8">Minimal Risk</h2>
                   <p>
-                    Unlock low-risk, high-reward vibes! Avesto is your ticket to
+                    Unlock low-risk, high-reward vibes! Raiser is your ticket to
                     financial growth with minimal risks. Dive into smart
                     investments tailored for you – secure, steady, and thriving.
                   </p>
@@ -272,7 +272,7 @@ const LandingPage = () => {
                     User-Friendly Interface:
                   </h2>
                   <p>
-                    Unlock low-risk, high-reward vibes! Avesto is your ticket to
+                    Unlock low-risk, high-reward vibes! Raiser is your ticket to
                     financial growth with minimal risks. Dive into smart
                     investments tailored for you – secure, steady, and thriving.
                   </p>

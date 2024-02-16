@@ -178,7 +178,7 @@ const SignIn = () => {
                         </div>
                         <div className="flex-col justify-start items-center gap-2 flex">
                           <Link
-                            to=""
+                            to="/forgotpassword"
                             className="opacity-70 text-zinc-900 text-base font-normal "
                           >
                             Forgot Password ?

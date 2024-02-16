@@ -73,7 +73,7 @@ const OTPVerificationModal = ({ show, onClose, onVerify, onResend}) => {
             </div>
             <div className="flex justify-center items-center">
               <input
-                type="number"
+                type="text"
                 maxLength="1"
                 value={otp[0]}
                 onChange={(event) => handleChange(0, event)}
@@ -87,7 +87,7 @@ const OTPVerificationModal = ({ show, onClose, onVerify, onResend}) => {
                 }}
               />
               <input
-                type="number"
+                type="text"
                 maxLength="1"
                 value={otp[1]}
                 onChange={(event) => handleChange(1, event)}
@@ -102,7 +102,7 @@ const OTPVerificationModal = ({ show, onClose, onVerify, onResend}) => {
               />
               {/* input 2 */}
               <input
-                type="number"
+                type="text"
                 maxLength="1"
                 value={otp[2]}
                 onChange={(event) => handleChange(2, event)}
@@ -117,7 +117,7 @@ const OTPVerificationModal = ({ show, onClose, onVerify, onResend}) => {
               />
               {/* input 3 */}
               <input
-                type="number"
+                type="text"
                 maxLength="1"
                 value={otp[3]}
                 onChange={(event) => handleChange(3, event)}
@@ -132,7 +132,7 @@ const OTPVerificationModal = ({ show, onClose, onVerify, onResend}) => {
               />
               {/* input 4 */}
               <input
-                type="number"
+                type="text"
                 maxLength="1"
                 value={otp[4]}
                 onChange={(event) => handleChange(4, event)}
@@ -147,7 +147,7 @@ const OTPVerificationModal = ({ show, onClose, onVerify, onResend}) => {
               />
               {/* input 5 */}
               <input
-                type="number"
+                type="text"
                 maxLength="1"
                 value={otp[5]}
                 onChange={(event) => handleChange(5, event)}

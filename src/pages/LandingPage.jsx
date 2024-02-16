@@ -18,9 +18,9 @@ import logoWhite from "../assets/landingPage/raiserWhite.svg";
 import alat from "../assets/landingPage/alat.png";
 import groupInvestment from "../assets/landingPage/groupinvestment.png";
 import getToKnow from "../assets/landingPage/Get to know 1.svg";
-import experience from "../assets/landingPage/Experience.png";
+import experience from "../assets/landingPage/Experience 1.svg";
 import interest from "../assets/landingPage/Interest.png";
-import DollarInvestment from "../assets/landingPage/DollarInvestment.svg";
+import screen from "../assets/landingPage/DollarInvestment.svg";
 
 const LandingPage = () => {
   const [activeLink, setActiveLink] = useState("");
@@ -361,8 +361,10 @@ const LandingPage = () => {
               </div>
 
               <div className="">
-                <img src={DollarInvestment} alt="dollar investment feature" />
-                {/* <div class="w-[874px] h-[538px] bg-stone-300 rounded-sm border-rose-100  "></div> */}
+                <img
+                  src={screen}
+                  alt="dollar investment feature"
+                />
               </div>
             </div>
           </section>
@@ -422,7 +424,7 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-          <div className="text-white text-opacity-50 text-base font-normal block lg:flex justify-between px-10 pb-4 items-center">
+          <div className="text-white text-opacity-50 text-base font-normal block sm:flex justify-between px-10 pb-4 items-center">
             <div className="flex items-center gap-5 pb-2">
               <h3 className="text-white">Powered by</h3>
               <img src={alat} alt="alat logo" className="w-10" />

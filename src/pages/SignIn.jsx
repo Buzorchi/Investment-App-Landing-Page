@@ -15,54 +15,58 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = async(values, {setSubmitting}) => {
-    try{
-      setLoading(true)
-      const response = await axios.post("https://bit-group-one-back-end.azurewebsites.net/api/User/login", {
-        email: values.email,
-        password: values.password
-      }
+  const handleLogin = async (values, { setSubmitting }) => {
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        "https://bit-group-one-back-end.azurewebsites.net/api/User/login",
+        {
+          email: values.email,
+          password: values.password,
+        },
       );
-      if(response.status !== 200){
-        console.log("Login failed", response.data.message)
-        toast(error?.response?.data?.message)
+      if (response.status !== 200) {
+        console.log("Login failed", response.data.message);
+        toast(error?.response?.data?.message);
         setError(response.data.message);
-        setSubmitting(false)
-        setLoading(false)
+        setSubmitting(false);
+        setLoading(false);
+      } else {
+        toast.error(response?.data?.message);
       }
-      navigate("/")
-    } catch(error){
-      console.log("Login failed", error)
-      toast(error?.response?.data?.message)
-      setError("An error occurred while logging in.");
-      setLoading(false)
-      setSubmitting(false)
+      navigate("/");
+    } catch (error) {
+      console.log("Login failed", error);
+      toast(error?.message);
+      // setError("An error occurred while logging in.");
+      setLoading(false);
+      setSubmitting(false);
     }
-  }
+  };
   return (
     <div>
-      <div className="w-full  md:flex">
-        <div className="hidden md:flex flex-1 bg-gradient-to-b from-red-600 to-fuchsia-950 justify-center items-center">
-          <div className="flex flex-col justify-center items-center h-screen max-w-screen-xl mx-auto pt-10">
+      <div className="w-full md:flex">
+        <div className="hidden flex-1 items-center justify-center bg-gradient-to-b from-red-600 to-fuchsia-950 md:flex">
+          <div className="mx-auto flex h-screen max-w-screen-xl flex-col items-center justify-center pt-10">
             <img src={logoWhite} alt="logo" className="w-40" />
             <img src={alat} alt="alat logo" className="w-10 pt-5" />
             <img
               src={signupImg}
               alt="signup img"
-              className="w-[386px] h-[] mt-5"
+              className="mt-5 h-[] w-[386px]"
             />
           </div>
         </div>
-        <div className="md:flex-1 bg-white pt-20">
+        <div className="bg-white pt-20 md:flex-1">
           <div className=" self-stretch">
-            <div className="flex-col justify-start items-center flex">
-              <div className="flex-col justify-start items-center gap-2 flex">
-                <p className="bg-gradient-to-r from-[#CD2128] to-[#490C3C] inline-block text-transparent bg-clip-text text-[32px] font-bold mt-5">
+            <div className="flex flex-col items-center justify-start">
+              <div className="flex flex-col items-center justify-start gap-2">
+                <p className="mt-5 inline-block bg-gradient-to-r from-[#CD2128] to-[#490C3C] bg-clip-text text-[32px] font-bold text-transparent">
                   Hello Again!
                 </p>
-                <p className="text-zinc-800 text-lg font-normal pb-5 ">
+                <p className="pb-5 text-lg font-normal text-zinc-800 ">
                   Welcome Back
                 </p>
               </div>
@@ -74,7 +78,7 @@ const SignIn = () => {
                     errors.email = "Required";
                   } else if (
                     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                      values.email
+                      values.email,
                     )
                   ) {
                     errors.email = "Invalid email address";
@@ -93,18 +97,18 @@ const SignIn = () => {
                   isSubmitting,
                 }) => (
                   <form onSubmit={handleSubmit}>
-                    <div className="flex-col justify-start items-start flex px-9 ">
-                      <div className="flex-col justify-start items-center gap-2 flex">
-                        <div className="flex-col justify-start items-start gap-5 flex">
-                          <div className="flex-col justify-start items-start gap-2 flex">
+                    <div className="flex flex-col items-start justify-start px-9 ">
+                      <div className="flex flex-col items-center justify-start gap-2">
+                        <div className="flex flex-col items-start justify-start gap-5">
+                          <div className="flex flex-col items-start justify-start gap-2">
                             {/* email */}
-                            <div className="flex-col justify-start items-start gap- flex">
-                              <label className="bg-gradient-to-r from-[#CD2128] to-[#490C3C] inline-block text-transparent bg-clip-text text-base font-medium ">
+                            <div className="gap- flex flex-col items-start justify-start">
+                              <label className="inline-block bg-gradient-to-r from-[#CD2128] to-[#490C3C] bg-clip-text text-base font-medium text-transparent ">
                                 Email Address
                               </label>
                               <div className="relative">
                                 <input
-                                  className="w-[336px] md:w-[400px] px-16 py-2 rounded-sm border border-gray-600 border-opacity-50 focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300 text-base font-normal"
+                                  className="w-[336px] rounded-sm border border-gray-600 border-opacity-50 px-16 py-2 text-base font-normal focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300 md:w-[400px]"
                                   placeholder="Email Address"
                                   type="email"
                                   name="email"
@@ -116,7 +120,7 @@ const SignIn = () => {
                                   <img
                                     src={email}
                                     alt=""
-                                    className="w-6 h-6 absolute opacity-30 top-2 ml-6"
+                                    className="absolute top-2 ml-6 h-6 w-6 opacity-30"
                                   />
                                 </div>
                               </div>
@@ -126,13 +130,13 @@ const SignIn = () => {
                             </div>
 
                             {/* password */}
-                            <div className="flex-col justify-start items-start flex">
-                              <label className="bg-gradient-to-r from-[#CD2128] to-[#490C3C] inline-block text-transparent bg-clip-text text-base font-medium outline-none ">
+                            <div className="flex flex-col items-start justify-start">
+                              <label className="inline-block bg-gradient-to-r from-[#CD2128] to-[#490C3C] bg-clip-text text-base font-medium text-transparent outline-none ">
                                 Password
                               </label>
                               <div className="relative">
                                 <input
-                                  className="w-[336px] md:w-[400px] px-16 py-2 rounded-sm border border-gray-600 border-opacity-50 focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300 text-base font-normal outline-none"
+                                  className="w-[336px] rounded-sm border border-gray-600 border-opacity-50 px-16 py-2 text-base font-normal outline-none focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300 md:w-[400px]"
                                   placeholder="Password"
                                   type={showPassword ? "text" : "password"}
                                   name="password"
@@ -144,12 +148,12 @@ const SignIn = () => {
                                   <img
                                     src={password}
                                     alt=""
-                                    className="w-6 h-6 absolute opacity-30 top-2 ml-6"
+                                    className="absolute top-2 ml-6 h-6 w-6 opacity-30"
                                   />
                                 </div>
                                 <button
                                   type="button"
-                                  className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-transparent border-none p-0 cursor-pointer"
+                                  className="absolute right-4 top-1/2 -translate-y-1/2 transform cursor-pointer border-none bg-transparent p-0"
                                   onClick={() => setShowPassword(!showPassword)}
                                 >
                                   {showPassword ? (
@@ -170,28 +174,28 @@ const SignIn = () => {
                           <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="bg-gradient-to-r from-[#CD2128] to-[#490C3C] w-[336px] md:w-[400px] p-2 text-white text-base font-semibold rounded-sm justify-center items-center inline-flex"
+                            className="inline-flex w-[336px] items-center justify-center rounded-sm bg-gradient-to-r from-[#CD2128] to-[#490C3C] p-2 text-base font-semibold text-white md:w-[400px]"
                           >
                             {loading ? "Please wait..." : "Login"}
                             {/* Login */}
                           </button>
                         </div>
-                        <div className="flex-col justify-start items-center gap-2 flex">
+                        <div className="flex flex-col items-center justify-start gap-2">
                           <Link
                             to="/forgotpassword"
-                            className="opacity-70 text-zinc-900 text-base font-normal "
+                            className="text-base font-normal text-zinc-900 opacity-70 "
                           >
                             Forgot Password ?
                           </Link>
                           <p>
-                            <span className="text-black text-opacity-70 text-base font-normal ">
+                            <span className="text-base font-normal text-black text-opacity-70 ">
                               Don’t have an account yet?
                             </span>
                           </p>
 
                           <Link
                             to="/signup"
-                            className="bg-gradient-to-r from-[#CD2128] to-[#490C3C] inline-block text-transparent bg-clip-text text-base font-semibold "
+                            className="inline-block bg-gradient-to-r from-[#CD2128] to-[#490C3C] bg-clip-text text-base font-semibold text-transparent "
                           >
                             {" "}
                             Create account
@@ -206,14 +210,14 @@ const SignIn = () => {
           </div>
         </div>
         <ToastContainer
-         position="top-center"
-         autoClose={3000}
-         hideProgressBar={false}
-         closeOnClick={true}
-         pauseOnHover={true}
-         draggable={true}
-         progress={undefined}
-         theme="dark"
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          progress={undefined}
+          theme="dark"
         />
       </div>
     </div>

@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 
-const OTPVerificationModal = ({ show, onClose, onVerify, onResend}) => {
+const OTPVerificationModal = ({ show, onClose, onVerify, onResend }) => {
   const [otp, setOTP] = useState("");
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const inputsRef = useRef([]);
 
   let otpString;
@@ -39,18 +39,18 @@ const OTPVerificationModal = ({ show, onClose, onVerify, onResend}) => {
     }
   };
 
- return (
+  return (
     <div className={`modal ${show ? "block" : "hidden"}`}>
-      <div className="modal-overlay bg-gray-900 opacity-50 fixed inset-0 z-50"></div>
-      <div className="modal-container  fixed w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-md p-8 z-50 overflow-y-auto bg-white shadow-lg rounded-md">
+      <div className="modal-overlay fixed inset-0 z-50 bg-gray-900 opacity-50"></div>
+      <div className="modal-container  fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 transform overflow-y-auto rounded-md bg-white p-8 shadow-lg">
         <div className="modal-content">
-          <div className="modal-header pb-10 relative">
+          <div className="modal-header relative pb-10">
             <button
               onClick={onClose}
-              className="text-gray-600 hover:text-gray-800 focus:outline-none absolute right-0 "
+              className="absolute right-0 text-gray-600 hover:text-gray-800 focus:outline-none "
             >
               <svg
-                className="w-6 h-6"
+                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -66,12 +66,12 @@ const OTPVerificationModal = ({ show, onClose, onVerify, onResend}) => {
           </div>
           <div className="modal-body">
             <div className="mb-10">
-              <h3 className="text-center text-zinc-900 text-base font-semibold leading-normal">
+              <h3 className="text-center text-base font-semibold leading-normal text-zinc-900">
                 Please enter the One-Time Password send to your email to Verify
                 your account
               </h3>
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex items-center justify-center">
               <input
                 type="text"
                 maxLength="1"
@@ -162,23 +162,20 @@ const OTPVerificationModal = ({ show, onClose, onVerify, onResend}) => {
               />
             </div>
 
-            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+            {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
           </div>
-          <div className="modal-footer flex justify-center items-center pt-10 ">
+          <div className="modal-footer flex items-center justify-center pt-10 ">
             <button
               onClick={handleVerifyOTP}
-              className="w-full px-4 py-2 bg-gradient-to-br from-red-600 to-fuchsia-950 justify-center items-center gap-2.5 inline-flex text-white rounded-md hover:bg-red-700 focus:outline-none"
+              className="inline-flex w-full items-center justify-center gap-2.5 rounded-md bg-gradient-to-br from-red-600 to-fuchsia-950 px-4 py-2 text-white hover:bg-red-700 focus:outline-none"
             >
               {loading ? "Verifying..." : "Verify"}
               {/* Verify */}
             </button>
           </div>
-          <h3 class="text-zinc-900 font-semibold mt-10 flex justify-center items-center">
+          <h3 class="mt-10 flex items-center justify-center font-semibold text-zinc-900">
             Didn’t get the OTP?{" "}
-            <button
-              className="text-red-700"
-              onClick={onResend}
-            >
+            <button className="text-red-700" onClick={onResend}>
               Resend OTP
             </button>
           </h3>

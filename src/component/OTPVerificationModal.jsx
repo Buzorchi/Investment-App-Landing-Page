@@ -1,7 +1,12 @@
 import React, { useRef, useState } from "react";
 
-const OTPVerificationModal = ({ show, onClose, onVerify, onResend }) => {
-  const [otp, setOTP] = useState("");
+const OTPVerificationModal = ({
+  show,
+  onClose,
+  onVerify,
+  onResend,
+}) => {
+  const [otp, setOTP] = useState(Array(6).fill(""));
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const inputsRef = useRef([]);

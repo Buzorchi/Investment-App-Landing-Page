@@ -14,7 +14,7 @@ const Menu = () => {
   };
 
   return (
-    <div className="relative lg:hidden">
+    <div className="relative flex items-center justify-center lg:hidden">
       <button onClick={toggleMenu} className="text-gray-600 focus:outline-none">
         <svg
           className="h-6 w-6"
@@ -107,7 +107,7 @@ const Menu = () => {
                   href="#contact"
                   className={`text-base font-normal leading-[27px] text-black ${
                     activeLink === "contact"
-                      ? "font-bold active:leading-loose active:text-rose-800"
+                      ? "font-bold active:leading-loose text-rose-800"
                       : ""
                   }`}
                   onClick={() => handleLinkClick("contact")}

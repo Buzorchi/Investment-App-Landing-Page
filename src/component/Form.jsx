@@ -38,14 +38,18 @@ const Form = () => {
       if (response.status === 200) {
         setUserEmail(values.email);
         setShowOTPModal(true);
-      } else {
-        toast.error(response?.data?.message);
       }
       setLoading(false);
       setSubmitting(false);
     } catch (error) {
-      console.log("error", error);
-      toast(error?.message);
+      if (error.response && error.response.status === 400) {
+        toast(error.response?.data?.message);
+      } else if (error.response.status === 500) {
+        toast(error.response?.data?.message);
+      } else {
+        console.log("error", error);
+        toast(error?.message);
+      }
       setLoading(false);
       setSubmitting(false);
     }
@@ -66,12 +70,17 @@ const Form = () => {
       }
       setLoading(false);
     } catch (error) {
-      toast(error?.message);
+      if (error.response && error.response.status === 400) {
+        toast(error.response?.data?.message);
+      } else {
+        console.log("error", error);
+        toast(error?.message);
+      }
       setLoading(false);
     }
   };
 
-  const handleResendOTP = async () => {
+  const handleResendOTP = async (setOTP) => {
     try {
       setLoading(true);
       if (!userEmail) {
@@ -83,14 +92,18 @@ const Form = () => {
         { email: userEmail },
       );
       if (response === 200) {
+        setOTP(Array(6).fill(""));
         // If resend-OTP  successful, navigate to resendotp page
         navigate("/resendotp");
         // setShowOTPModal(true);
-      } else {
-        toast.error(response?.data?.message);
       }
     } catch (error) {
-      toast(error?.message);
+      if (error.response && error.response.status === 400) {
+        toast(error.response?.data?.message);
+      } else {
+        console.log("error", error);
+        toast(error?.message);
+      }
       setLoading(false);
     }
   };

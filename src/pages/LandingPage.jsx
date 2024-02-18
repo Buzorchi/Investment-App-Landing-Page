@@ -4,13 +4,17 @@ import { Link } from "react-router-dom";
 import FAQ from "../component/FAQ";
 import all from "../assets/landingPage/allInOne.png";
 import blackArrow from "../assets/landingPage/blackArrow.svg";
-import dollar from "../assets/landingPage/dollar.svg";
 import easy from "../assets/landingPage/easy.png";
+import finIcon from "../assets/landingPage/Icon.svg";
 import layers from "../assets/landingPage/layers.svg";
 import lightInbox from "../assets/landingPage/light_inbox.svg";
 import line from "../assets/landingPage/line.svg";
 import rightArrow from "../assets/landingPage/Arrow.svg";
 import safety from "../assets/landingPage/safety.png";
+import chart from "../assets/landingPage/chart.svg";
+import layer from "../assets/landingPage/grommet-icons_resources.svg";
+import wallet from "../assets/landingPage/wallet-check.svg";
+import uiphone from "../assets/landingPage/guidance_ui-phone.svg";
 import googleIcon from "../assets/landingPage/logos_google-play-icon.svg";
 import appleIcon from "../assets/landingPage/apple-icon.svg";
 import logo from "../assets/landingPage/raiser.svg";
@@ -31,14 +35,15 @@ const LandingPage = () => {
 
   return (
     <div className="">
-      {/* max-w-[1440px] w-full mx-auto  */}
       <nav className="navbar fixed top-0 z-10 inline-flex w-full max-w-[1440px] items-center justify-between border-b-2 border-neutral-100 bg-white px-7 py-2 transition-all duration-700">
-        <div className="flex items-center gap-20">
+        <div className="gap-16 lg:inline-flex lg:items-center lg:justify-center">
           {/* logo */}
-          <img className="" src={logo} alt="logo" />
+          <div>
+            <img className="" src={logo} alt="logo" />
+          </div>
 
           <div>
-            <nav className="hidden items-center justify-start gap-16 lg:inline-flex">
+            <nav className="hidden gap-10 lg:inline-flex">
               <a
                 href="#home"
                 className={`text-base font-normal leading-[27px] text-black ${
@@ -113,15 +118,14 @@ const LandingPage = () => {
 
       {/* main content */}
       <main>
-        <div className="mx-auto my-24 w-[90%]">
-          {/* w-[90%] mx-auto my-24 */}
+        <div className="mx-auto my-11 w-[90%] lg:my-24">
           {/* home */}
           <section id="home" className="">
             <div className="py-12 text-center  ">
               <h2 className="text-center text-[32px] font-bold leading-10 text-rose-800  lg:text-6xl  ">
                 Simplified Investing Just <br /> for you.
               </h2>
-              <h2 className="my-8 text-base font-normal text-zinc-900 md:text-lg">
+              <h2 className=" my-8 text-base font-normal text-zinc-900 md:text-lg">
                 Set out on your financial adventure with assurance, where
                 maneuvering through the complexities of finance <br /> feels
                 like a gentle breeze!
@@ -177,10 +181,10 @@ const LandingPage = () => {
               </h2>
               <p className="my-8 text-base font-normal text-zinc-900  lg:text-base">
                 Enjoy unbeatable convenience with our amazing services! We've
-                got you covered with top-notch options, making sure everything
-                fits your className effortlessly.
+                got you covered with <br /> top-notch options, making sure
+                everything fits your className effortlessly.
               </p>
-              <img className="m-auto" src={line} alt="line" />
+              <img className="mx-auto" src={line} alt="line" />
 
               {/* side images */}
               {/* <div className="">
@@ -222,17 +226,17 @@ const LandingPage = () => {
             </div>
             <section>
               <div className="my-10 text-center">
-                <h2 className="text-2xl lg:text-5xl">
+                <h2 className="text-center text-[32px] leading-10 lg:text-5xl">
                   These are reasons why you should use <br /> Raiser
                 </h2>
                 <p className="my-6 text-base font-normal leading-[27px] text-zinc-900 lg:text-base">
                   Unlock and secure your financial potential here!
                 </p>
-                <img className="m-auto" src={line} alt="line" />
+                <img className="mx-auto" src={line} alt="line" />
               </div>
               <div className="grid gap-12 lg:grid-cols-2">
                 <div className="hoever:bg-white bg-white p-5 shadow transition delay-150 duration-700 ease-in-out hover:-translate-y-1 hover:scale-110">
-                  <img src={safety} alt="safety" />
+                  <img src={chart} alt="chart" />
                   <h2 className="my-8 text-2xl font-medium">
                     Diversified Investment
                   </h2>
@@ -245,7 +249,7 @@ const LandingPage = () => {
                 </div>
 
                 <div className="hoever:bg-white bg-white p-5 shadow transition delay-150 duration-700 ease-in-out hover:-translate-y-1 hover:scale-110">
-                  <img src={all} alt="all" />
+                  <img src={layer} alt="layer" />
                   <h2 className="my-8 text-2xl  font-medium">
                     Educational Resources
                   </h2>
@@ -258,7 +262,7 @@ const LandingPage = () => {
                 </div>
 
                 <div className="hoever:bg-white bg-white p-5 shadow transition delay-150 duration-700 ease-in-out hover:-translate-y-1 hover:scale-110">
-                  <img src={easy} alt="easy" />
+                  <img src={wallet} alt="wallet" />
                   <h2 className="my-8 text-2xl font-medium">Minimal Risk</h2>
                   <p>
                     Unlock low-risk, high-reward vibes! Raiser is your ticket to
@@ -268,7 +272,7 @@ const LandingPage = () => {
                 </div>
 
                 <div className="hoever:bg-white bg-white p-5 shadow transition delay-150 duration-700 ease-in-out hover:-translate-y-1 hover:scale-110">
-                  <img src={easy} alt="easy" />
+                  <img src={uiphone} alt="uiphone" />
                   <h2 className="my-8 text-2xl font-medium">
                     User-Friendly Interface:
                   </h2>
@@ -285,7 +289,7 @@ const LandingPage = () => {
           {/* features */}
           <section id="features" className="pt-10">
             <div className="my-10 text-center">
-              <h2 className="text-center leading-loose sm:text-5xl">
+              <h2 className="text-center text-[32px] leading-10 sm:text-5xl">
                 Unlock a World of Incredible Features
               </h2>
               <p className="my-8">
@@ -295,24 +299,24 @@ const LandingPage = () => {
               <img className="mx-auto" src={line} alt="line" />
             </div>
             {/* not completed */}
-            <div class="flex flex-col items-center justify-center gap-10 bg-rose-800 lg:flex-row lg:justify-around">
-              <div class="pl-10 pt-5">
+            <div className="flex flex-col items-center justify-center gap-10 bg-rose-800 lg:flex-row lg:justify-around">
+              <div className="pl-10 pt-5">
                 <img src={lightInbox} alt="lightInbox" />
-                <h2 class=" py-10 font-semibold leading-[55.50px] text-white">
+                <h2 className=" py-10 font-semibold leading-[55.50px] text-white">
                   Personalized Investment
                 </h2>
-                <p class="w-[312px] text-base font-normal leading-normal text-white">
+                <p className="w-[312px] text-base font-normal leading-normal text-white">
                   Designing a financial future specifically for you step into
                   the realm of personalized investment excellence
                 </p>
               </div>
-              <div className="inline-flex items-center justify-center gap-5 lg:gap-[20px]">
+              <div className="-ml-12 inline-flex items-center justify-center gap-5 lg:gap-[20px]">
                 <img
                   src={getToKnow}
                   alt="get to know"
                   className=" h-[291px] pb-5 sm:h-[500px]"
                 />
-                <div class="flex flex-col items-center justify-center gap-10">
+                <div className="flex flex-col items-center justify-center gap-10">
                   <img
                     src={experience}
                     alt="experience"
@@ -347,16 +351,15 @@ const LandingPage = () => {
             </div>
 
             {/* finish up */}
-            <div className="bg-rose-800 px-4 py-14 lg:flex ">
-              <div className="ml-14">
-                <img src={dollar} alt="dollar" />
+            <div className="bg-rose-800 px-10 py-14 lg:flex ">
+              <div className="">
+                <img src={finIcon} alt="financial literacy icon" />
                 <h2 className="mt-3 text-2xl font-semibold text-white">
-                  Dollar Investment
+                  Financial Literacy
                 </h2>
                 <p className="my-8 text-white">
-                  Multiply your potential with dollar <br /> investments turning
-                  individual dollars into <br /> a pathway for financial
-                  growth!.
+                  Unlock financial freedom in the palm of your hand! Take charge
+                  of your future. Start learning, start earning!
                 </p>
                 <img src={rightArrow} alt="rightArrow" className="pb-7" />
               </div>

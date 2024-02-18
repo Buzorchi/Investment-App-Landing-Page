@@ -33,14 +33,16 @@ const SignIn = () => {
         setError(response.data.message);
         setSubmitting(false);
         setLoading(false);
-      } else {
-        toast.error(response?.data?.message);
       }
       navigate("/");
     } catch (error) {
       console.log("Login failed", error);
-      toast(error?.message);
-      // setError("An error occurred while logging in.");
+      if (error.response && error.response.status === 401) {
+        toast(error.response?.data?.message);
+      } else {
+        console.log("error", error);
+        toast(error?.message);
+      }
       setLoading(false);
       setSubmitting(false);
     }

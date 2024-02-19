@@ -32,6 +32,7 @@ const Form = () => {
       // console.l;
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/register",
+        
         values,
       );
       console.log("response", response);
@@ -44,11 +45,11 @@ const Form = () => {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         toast(error.response?.data?.message);
-      } else if (error.response.status === 500) {
+      } else if (error.response && error.response.status === 500) {
         toast(error.response?.data?.message);
       } else {
         console.log("error", error);
-        toast(error?.message);
+        toast.error("Something is wrong");
       }
       setLoading(false);
       setSubmitting(false);

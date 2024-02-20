@@ -1,25 +1,8 @@
 import React from "react";
 // import backdrop from "../assets/background-backdrop.svg";
-import Form from "../component/Form";
 import logo from "../assets/landingPage/raiser.svg";
-// import axios from "axios";
-
+import SignupForm from "../component/SignupForm";
 const SignUp = () => {
-  // const [showModal, setShowModal] = useState(false);
-  // const [otp, setOtp] = useState('');
-  // const [error, setError] = useState('');
-
-  // const handleGetStarted = asyn () => {
-  //   try {
-  //     const response = await axios.post("api");
-  //     if (response.status === 200){
-  //       setShowModal(true)
-  //     }else {
-  //       setError (response)
-  //     }
-  //   }
-  // }
-
   return (
     <div>
       <div className="relative ">
@@ -30,21 +13,19 @@ const SignUp = () => {
             /> */}
 
         {/* header */}
-        <header className="flex flex-col justify-center items-center py-7">
-          {/* add logo */}
+        <header className="flex flex-col items-center justify-center py-7">
           <img className="mb-5" src={logo} alt="logo" />
-
-          <p className="text-stone-950 text-2xl font-bold bg-gradient-to-r from-[#CD2128] to-[#490C3C] text-transparent bg-clip-text">
+          <p className="bg-gradient-to-r from-[#CD2128] to-[#490C3C] bg-clip-text text-2xl font-bold text-stone-950 text-transparent">
             Create an account
           </p>
-          <p className="text-stone-950 text-base font-normal">
+          <p className="text-base font-normal text-stone-950">
             Sign up to Raiser
           </p>
         </header>
-
+        
         {/* main content*/}
-        <div className="max-w-md mx-auto bg-white shadow-2xl rounded px-5 py-5">
-          <Form />
+        <div className="mx-auto max-w-md rounded bg-white px-5 py-5 shadow-2xl">
+          <SignupForm />
         </div>
       </div>
     </div>

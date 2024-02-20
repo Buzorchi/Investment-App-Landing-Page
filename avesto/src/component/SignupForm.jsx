@@ -8,9 +8,9 @@ import eyeHideIcon from "../assets/eyeHideIcon.svg";
 import eyeShowIcon from "../assets/eyeShowIcon.svg";
 import "react-toastify/dist/ReactToastify.css";
 
-const Form = () => {
+const SignupForm = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showOTPModal, setShowOTPModal] = useState(false);
@@ -28,21 +28,30 @@ const Form = () => {
   // handle signup
   const handleSignUp = async (values, { setSubmitting }) => {
     try {
-      setLoading(true);
+      setisLoading(true);
+      // console.l;
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/register",
-        values
-      );
 
+        values,
+      );
+      console.log("response", response);
       if (response.status === 200) {
         setUserEmail(values.email);
         setShowOTPModal(true);
       }
-      setLoading(false);
+      setisLoading(false);
       setSubmitting(false);
     } catch (error) {
-      toast(error?.response?.data?.message);
-      setLoading(false);
+      if (error.response && error.response.status === 400) {
+        toast(error.response?.data?.message);
+      } else if (error.response && error.response.status === 500) {
+        toast(error.response?.data?.message);
+      } else {
+        console.log("error", error);
+        toast.error("Something is wrong");
+      }
+      setisLoading(false);
       setSubmitting(false);
     }
   };
@@ -50,40 +59,53 @@ const Form = () => {
   // handle otp verification
   const handleOTPVerification = async (otp) => {
     try {
-      setLoading(true);
+      setisLoading(true);
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/validate",
-        { otp }
+        { otp },
       );
       if (response.status === 200) {
         navigate("/signin");
+      } else {
+        toast.error(response?.data?.message);
       }
-      setLoading(false);
+      setisLoading(false);
     } catch (error) {
-      toast(error?.response?.data?.message);
-      setLoading(false);
+      if (error.response && error.response.status === 400) {
+        toast(error.response?.data?.message);
+      } else {
+        console.log("error", error);
+        toast(error?.message);
+      }
+      setisLoading(false);
     }
   };
 
-  const handleResendOTP = async () => {
+  const handleResendOTP = async (setOTP) => {
     try {
-      setLoading(true);
+      setisLoading(true);
       if (!userEmail) {
         console.log("Email is empty");
         return;
       }
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/resend-otp",
-        { email: userEmail }
+        { email: userEmail },
       );
       if (response === 200) {
+        setOTP(Array(6).fill(""));
         // If resend-OTP  successful, navigate to resendotp page
         navigate("/resendotp");
         // setShowOTPModal(true);
       }
     } catch (error) {
-      toast(error?.response?.data?.message);
-      setLoading(false);
+      if (error.response && error.response.status === 400) {
+        toast(error.response?.data?.message);
+      } else {
+        console.log("error", error);
+        toast(error?.message);
+      }
+      setisLoading(false);
     }
   };
 
@@ -140,7 +162,6 @@ const Form = () => {
           }
           return errors;
         }}
-        // onSubmit={handleSignUp}
         onSubmit={(values, formikProps) => {
           handleSignUp(values, formikProps);
         }}
@@ -148,11 +169,11 @@ const Form = () => {
         {(formikProps) => (
           <form onSubmit={formikProps.handleSubmit} className="">
             <div className="mb-2">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 First Name <span className="text-red-700">*</span>
               </label>
               <input
-                className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                 placeholder="Enter your first name"
                 type="text"
                 name="firstName"
@@ -165,13 +186,12 @@ const Form = () => {
                   <p className="text-red-300">{formikProps.errors.firstName}</p>
                 )}
             </div>
-
             <div className="mb-2">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 Last Name <span className="text-red-700">*</span>
               </label>
               <input
-                className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                 placeholder="Enter your last name"
                 type="text"
                 name="lastName"
@@ -183,13 +203,12 @@ const Form = () => {
                 <p className="text-red-300">{formikProps.errors.lastName}</p>
               )}
             </div>
-
             <div className="mb-2">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 Email Address <span className="text-red-700">*</span>
               </label>
               <input
-                className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                 placeholder="Enter your email address"
                 type="email"
                 name="email"
@@ -201,13 +220,12 @@ const Form = () => {
                 <p className="text-red-300">{formikProps.errors.email}</p>
               )}
             </div>
-
             <div className="mb-2">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 Mobile Number <span className="text-red-700">*</span>
               </label>
               <input
-                className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                 placeholder="Enter your phone number"
                 type="tel"
                 name="phoneNumber"
@@ -231,14 +249,13 @@ const Form = () => {
                   </p>
                 )}
             </div>
-
             <div className="mb-2">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 Password <span className="text-red-700">*</span>
               </label>
               <div className="relative">
                 <input
-                  className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                  className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                   placeholder="Create your password"
                   type={showPassword ? "text" : "password"}
                   name="password"
@@ -248,7 +265,7 @@ const Form = () => {
                 />
                 <button
                   type="button"
-                  className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-transparent border-none p-0 cursor-pointer"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 transform cursor-pointer border-none bg-transparent p-0"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -263,14 +280,13 @@ const Form = () => {
                 <p className="text-red-300">{formikProps.errors.password}</p>
               )}
             </div>
-
             <div className="mb-4">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 Confirm Password <span className="text-red-700">*</span>
               </label>
               <div className="relative">
                 <input
-                  className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                  className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                   placeholder="Confirm your password"
                   type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
@@ -280,7 +296,7 @@ const Form = () => {
                 />
                 <button
                   type="button"
-                  className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-transparent border-none p-0 cursor-pointer"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 transform cursor-pointer border-none bg-transparent p-0"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                   {showConfirmPassword ? (
@@ -302,9 +318,9 @@ const Form = () => {
             <button
               type="submit"
               disabled={formikProps.isSubmitting}
-              className="w-full px-4 py-[10px] bg-gradient-to-b from-red-600 to-fuchsia-950 rounded-sm justify-center items-center gap-2.5 inline-flex text-white text-base font-semibold"
+              className="inline-flex w-full items-center justify-center gap-2.5 rounded-sm bg-gradient-to-b from-red-600 to-fuchsia-950 px-4 py-[10px] text-base font-semibold text-white"
             >
-              {loading ? "Please wait..." : "Get Started"}
+              {isLoading ? "Please wait..." : "Get Started"}
             </button>
           </form>
         )}
@@ -326,11 +342,11 @@ const Form = () => {
         onClose={() => setShowOTPModal(false)}
         onVerify={handleOTPVerification}
         onResend={() => handleResendOTP()}
-        loading={loading}
+        isLoading={isLoading}
         // resendingOTP={resendingOTP}
       />
     </div>
   );
 };
 
-export default Form;
+export default SignupForm;

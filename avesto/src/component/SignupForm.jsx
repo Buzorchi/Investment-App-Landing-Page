@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import OTPVerificationModal from "./OTPVerificationModal";
 import eyeHideIcon from "../assets/eyeHideIcon.svg";
 import eyeShowIcon from "../assets/eyeShowIcon.svg";
+import "react-toastify/dist/ReactToastify.css";
 
-const Form = () => {
+const SignupForm = () => {
   const navigate = useNavigate();
+  const [isLoading, setisLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showOTPModal, setShowOTPModal] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
   // Function to check password conditions
   const isPasswordValid = (password) => {
     // Add your password conditions here
@@ -18,57 +25,92 @@ const Form = () => {
     return regex.test(password);
   };
 
-  const handleSignUp = async (
-    values,
-    { setSubmitting, setErrors, resetForm }
-  ) => {
-    console.log(values);
+  // handle signup
+  const handleSignUp = async (values, { setSubmitting }) => {
     try {
-      console.log("Values being sent to the server:", values);
-      // Make API call using Axios
+      setisLoading(true);
+      // console.l;
       const response = await axios.post(
-        "https://2a98-102-88-83-196.ngrok-free.app/api/User/register",
-        values
+        "https://bit-group-one-back-end.azurewebsites.net/api/User/register",
+
+        values,
       );
-      console.log("Response from server:", response.data);
-      console.log(response)
-
-      if (response.status !== 200) {
-        // Handle error response
-        console.log(
-          "Error response received from server:",
-          response.data.errors
-        );
-        setErrors(response.data.errors);
-        setSubmitting(false);
-        // console.log("Response from server:", response.data);
-
-        return;
+      console.log("response", response);
+      if (response.status === 200) {
+        setUserEmail(values.email);
+        setShowOTPModal(true);
       }
-
-      // If successful response
-      // If successful registration, move to the signup
-      const { message } = response.data;
-      console.log('message', message)
-      if (message === "User registered successfully") {
-        // Redirect to OTP page
-        navigate("/"); // Change "/otp" to the actual route of your OTP page
-      } else {
-        // Handle other messages
-        console.log(message);
-      }
-      alert("Sign up successful!");
-      resetForm();
+      setisLoading(false);
       setSubmitting(false);
-      console.log(response.data);
     } catch (error) {
-      console.error("Error occurred:", error);
+      if (error.response && error.response.status === 400) {
+        toast(error.response?.data?.message);
+      } else if (error.response && error.response.status === 500) {
+        toast(error.response?.data?.message);
+      } else {
+        console.log("error", error);
+        toast.error("Something is wrong");
+      }
+      setisLoading(false);
       setSubmitting(false);
     }
   };
 
+  // handle otp verification
+  const handleOTPVerification = async (otp) => {
+    try {
+      setisLoading(true);
+      const response = await axios.post(
+        "https://bit-group-one-back-end.azurewebsites.net/api/User/validate",
+        { otp },
+      );
+      if (response.status === 200) {
+        navigate("/signin");
+      } else {
+        toast.error(response?.data?.message);
+      }
+      setisLoading(false);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        toast(error.response?.data?.message);
+      } else {
+        console.log("error", error);
+        toast(error?.message);
+      }
+      setisLoading(false);
+    }
+  };
+
+  const handleResendOTP = async (setOTP) => {
+    try {
+      setisLoading(true);
+      if (!userEmail) {
+        console.log("Email is empty");
+        return;
+      }
+      const response = await axios.post(
+        "https://bit-group-one-back-end.azurewebsites.net/api/User/resend-otp",
+        { email: userEmail },
+      );
+      if (response === 200) {
+        setOTP(Array(6).fill(""));
+        // If resend-OTP  successful, navigate to resendotp page
+        navigate("/resendotp");
+        // setShowOTPModal(true);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        toast(error.response?.data?.message);
+      } else {
+        console.log("error", error);
+        toast(error?.message);
+      }
+      setisLoading(false);
+    }
+  };
+
   return (
-    <div>
+    <div className="">
       <Formik
         initialValues={{
           firstName: "",
@@ -80,7 +122,6 @@ const Form = () => {
         }}
         validate={(values) => {
           const errors = {};
-          console.log("Validating form values:", values);
           // First Name validation
           if (!values.firstName) {
             errors.firstName = "First name is required";
@@ -112,51 +153,27 @@ const Form = () => {
             errors.password = "Password is required";
           } else if (!isPasswordValid(values.password)) {
             errors.password =
-              "Password must have at least 8 characters, one uppercase letter,one special character one lowercase letter, and one digit";
+              "Password must have at least 8 characters, one uppercase letter,one special character, one lowercase letter and one digit";
           }
 
           // Confirm Password validation
           if (values.password !== values.confirmPassword) {
             errors.confirmPassword = "Passwords do not match";
           }
-
           return errors;
         }}
-        onSubmit={handleSignUp}
-        // onSubmit={(values, { setSubmitting, setErrors, resetForm }) => {
-
-        //   if (!isPasswordValid(values.password)) {
-        //     // If the password is not valid, set an error message and return early
-        //     setErrors({ password: "Invalid password" });
-        //     setSubmitting(false);
-        //     return;
-        //   }
-        //   setTimeout(() => {
-        //     // console.log("Submitting form with values:", values)
-        //     alert(JSON.stringify(values, null, 2));
-        //     resetForm();
-        //     setSubmitting(false);
-        //   }, 200);
-        // }}
+        onSubmit={(values, formikProps) => {
+          handleSignUp(values, formikProps);
+        }}
       >
-        {/* {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          and other goodies 
-        }) => ( */}
         {(formikProps) => (
-          <form onSubmit={formikProps.handleSubmit}>
-            <div className="flex-col justify-start items-start gap-2 flex">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                First Name
+          <form onSubmit={formikProps.handleSubmit} className="">
+            <div className="mb-2">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
+                First Name <span className="text-red-700">*</span>
               </label>
               <input
-                className="w-[650px]  px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                 placeholder="Enter your first name"
                 type="text"
                 name="firstName"
@@ -169,13 +186,12 @@ const Form = () => {
                   <p className="text-red-300">{formikProps.errors.firstName}</p>
                 )}
             </div>
-
-            <div className="flex-col justify-start items-start gap-2 flex mt-2">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                Last Name
+            <div className="mb-2">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
+                Last Name <span className="text-red-700">*</span>
               </label>
               <input
-                className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                 placeholder="Enter your last name"
                 type="text"
                 name="lastName"
@@ -187,13 +203,12 @@ const Form = () => {
                 <p className="text-red-300">{formikProps.errors.lastName}</p>
               )}
             </div>
-
-            <div className="flex-col justify-start items-start gap-2 flex mt-2">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                Email Address
+            <div className="mb-2">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
+                Email Address <span className="text-red-700">*</span>
               </label>
               <input
-                className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                 placeholder="Enter your email address"
                 type="email"
                 name="email"
@@ -205,13 +220,12 @@ const Form = () => {
                 <p className="text-red-300">{formikProps.errors.email}</p>
               )}
             </div>
-
-            <div className="flex-col justify-start items-start gap-2 flex mt-2">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                Mobile Number
+            <div className="mb-2">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
+                Mobile Number <span className="text-red-700">*</span>
               </label>
               <input
-                className="w-full px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                 placeholder="Enter your phone number"
                 type="tel"
                 name="phoneNumber"
@@ -235,14 +249,13 @@ const Form = () => {
                   </p>
                 )}
             </div>
-
-            <div className="flex-col justify-start items-start gap-2 flex mt-2">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                Password
+            <div className="mb-2">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
+                Password <span className="text-red-700">*</span>
               </label>
               <div className="relative">
                 <input
-                  className=" w-[650px] px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                  className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                   placeholder="Create your password"
                   type={showPassword ? "text" : "password"}
                   name="password"
@@ -252,7 +265,7 @@ const Form = () => {
                 />
                 <button
                   type="button"
-                  className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-transparent border-none p-0 cursor-pointer"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 transform cursor-pointer border-none bg-transparent p-0"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -267,14 +280,13 @@ const Form = () => {
                 <p className="text-red-300">{formikProps.errors.password}</p>
               )}
             </div>
-
-            <div className="flex-col justify-start items-start gap-2 flex mt-2">
-              <label className="text-stone-950 text-opacity-50 text-base font-semibold ">
-                Confirm Password
+            <div className="mb-4">
+              <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
+                Confirm Password <span className="text-red-700">*</span>
               </label>
               <div className="relative">
                 <input
-                  className="w-[650px] px-6 py-3 bg-white rounded-sm border border-stone-950 border-opacity-25 justify-start items-center text-stone-950 text-sm font-semibold focus:outline-none focus:ring focus:ring-red-300 focus:border-red-300"
+                  className="w-full items-center justify-start rounded-sm border border-stone-950 border-opacity-25 bg-white px-6 py-3 text-sm font-semibold text-stone-950 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300"
                   placeholder="Confirm your password"
                   type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
@@ -284,7 +296,7 @@ const Form = () => {
                 />
                 <button
                   type="button"
-                  className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-transparent border-none p-0 cursor-pointer"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 transform cursor-pointer border-none bg-transparent p-0"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                   {showConfirmPassword ? (
@@ -306,15 +318,35 @@ const Form = () => {
             <button
               type="submit"
               disabled={formikProps.isSubmitting}
-              className=" mt-10 w-full px-4 py-[19px] bg-gradient-to-b from-red-600 to-fuchsia-950 rounded-sm justify-center items-center gap-2.5 inline-flex text-white text-base font-semibold"
+              className="inline-flex w-full items-center justify-center gap-2.5 rounded-sm bg-gradient-to-b from-red-600 to-fuchsia-950 px-4 py-[10px] text-base font-semibold text-white"
             >
-              Get Started
+              {isLoading ? "Please wait..." : "Get Started"}
             </button>
           </form>
         )}
       </Formik>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={true}
+        progress={undefined}
+        theme="dark"
+      />
+
+      {/* OTP Verification Modal */}
+      <OTPVerificationModal
+        show={showOTPModal}
+        onClose={() => setShowOTPModal(false)}
+        onVerify={handleOTPVerification}
+        onResend={() => handleResendOTP()}
+        isLoading={isLoading}
+        // resendingOTP={resendingOTP}
+      />
     </div>
   );
 };
 
-export default Form;
+export default SignupForm;

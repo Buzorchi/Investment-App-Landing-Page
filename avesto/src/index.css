@@ -7,6 +7,9 @@
 @layer base {
   body {
     @apply text-['Lato'];
+    @apply max-w-[1400px];
+    /* @apply p-[100px]; */
+    @apply mx-auto
   }
   h2 {
     @apply text-rose-800;
@@ -18,3 +21,5 @@
     @apply text-zinc-900;
   }
 }
+
+

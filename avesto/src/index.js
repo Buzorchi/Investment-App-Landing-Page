@@ -1,29 +1,31 @@
-import React from 'react';import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ReactDOM from "react-dom/client";
 
-import './index.css';
-import LandingPage from './pages/LandingPage';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
+import "./index.css";
+import LandingPage from "./pages/LandingPage";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import ForgotPassword from "./pages/ForgotPassword";
 // import App from './App';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage/>,
+    element: <LandingPage />,
   },
   {
     path: "/signin",
-    element: <SignIn/>,
+    element: <SignIn />,
   },
   {
     path: "/signup",
-    element: <SignUp/>,
+    element: <SignUp />,
   },
-  
+  {
+    path: "/forgotpassword",
+    element: <ForgotPassword/>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

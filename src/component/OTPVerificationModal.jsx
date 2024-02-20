@@ -8,7 +8,7 @@ const OTPVerificationModal = ({
 }) => {
   const [otp, setOTP] = useState(Array(6).fill(""));
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const inputsRef = useRef([]);
 
   let otpString;
@@ -174,12 +174,11 @@ const OTPVerificationModal = ({
               onClick={handleVerifyOTP}
               className="inline-flex w-full items-center justify-center gap-2.5 rounded-md bg-gradient-to-br from-red-600 to-fuchsia-950 px-4 py-2 text-white hover:bg-red-700 focus:outline-none"
             >
-              {loading ? "Verifying..." : "Verify"}
-              {/* Verify */}
+              {isLoading ? "Verifying..." : "Verify"}
             </button>
           </div>
           <h3 class="mt-10 flex items-center justify-center font-semibold text-zinc-900">
-            Didn’t get the OTP?{" "}
+           {` Didn’t get the OTP?{" "}`}
             <button className="text-red-700" onClick={onResend}>
               Resend OTP
             </button>

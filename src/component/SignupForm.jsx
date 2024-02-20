@@ -8,9 +8,9 @@ import eyeHideIcon from "../assets/eyeHideIcon.svg";
 import eyeShowIcon from "../assets/eyeShowIcon.svg";
 import "react-toastify/dist/ReactToastify.css";
 
-const Form = () => {
+const SignupForm = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showOTPModal, setShowOTPModal] = useState(false);
@@ -28,11 +28,11 @@ const Form = () => {
   // handle signup
   const handleSignUp = async (values, { setSubmitting }) => {
     try {
-      setLoading(true);
+      setisLoading(true);
       // console.l;
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/register",
-        
+
         values,
       );
       console.log("response", response);
@@ -40,7 +40,7 @@ const Form = () => {
         setUserEmail(values.email);
         setShowOTPModal(true);
       }
-      setLoading(false);
+      setisLoading(false);
       setSubmitting(false);
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -51,7 +51,7 @@ const Form = () => {
         console.log("error", error);
         toast.error("Something is wrong");
       }
-      setLoading(false);
+      setisLoading(false);
       setSubmitting(false);
     }
   };
@@ -59,7 +59,7 @@ const Form = () => {
   // handle otp verification
   const handleOTPVerification = async (otp) => {
     try {
-      setLoading(true);
+      setisLoading(true);
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/validate",
         { otp },
@@ -69,7 +69,7 @@ const Form = () => {
       } else {
         toast.error(response?.data?.message);
       }
-      setLoading(false);
+      setisLoading(false);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         toast(error.response?.data?.message);
@@ -77,13 +77,13 @@ const Form = () => {
         console.log("error", error);
         toast(error?.message);
       }
-      setLoading(false);
+      setisLoading(false);
     }
   };
 
   const handleResendOTP = async (setOTP) => {
     try {
-      setLoading(true);
+      setisLoading(true);
       if (!userEmail) {
         console.log("Email is empty");
         return;
@@ -105,7 +105,7 @@ const Form = () => {
         console.log("error", error);
         toast(error?.message);
       }
-      setLoading(false);
+      setisLoading(false);
     }
   };
 
@@ -162,7 +162,6 @@ const Form = () => {
           }
           return errors;
         }}
-        // onSubmit={handleSignUp}
         onSubmit={(values, formikProps) => {
           handleSignUp(values, formikProps);
         }}
@@ -187,7 +186,6 @@ const Form = () => {
                   <p className="text-red-300">{formikProps.errors.firstName}</p>
                 )}
             </div>
-
             <div className="mb-2">
               <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 Last Name <span className="text-red-700">*</span>
@@ -205,7 +203,6 @@ const Form = () => {
                 <p className="text-red-300">{formikProps.errors.lastName}</p>
               )}
             </div>
-
             <div className="mb-2">
               <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 Email Address <span className="text-red-700">*</span>
@@ -223,7 +220,6 @@ const Form = () => {
                 <p className="text-red-300">{formikProps.errors.email}</p>
               )}
             </div>
-
             <div className="mb-2">
               <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 Mobile Number <span className="text-red-700">*</span>
@@ -253,7 +249,6 @@ const Form = () => {
                   </p>
                 )}
             </div>
-
             <div className="mb-2">
               <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 Password <span className="text-red-700">*</span>
@@ -285,7 +280,6 @@ const Form = () => {
                 <p className="text-red-300">{formikProps.errors.password}</p>
               )}
             </div>
-
             <div className="mb-4">
               <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 Confirm Password <span className="text-red-700">*</span>
@@ -326,33 +320,32 @@ const Form = () => {
               disabled={formikProps.isSubmitting}
               className="inline-flex w-full items-center justify-center gap-2.5 rounded-sm bg-gradient-to-b from-red-600 to-fuchsia-950 px-4 py-[10px] text-base font-semibold text-white"
             >
-              {loading ? "Please wait..." : "Get Started"}
+              {isLoading ? "Please wait..." : "Get Started"}
             </button>
           </form>
         )}
       </Formik>
       <ToastContainer
         position="top-center"
+        theme="dark"
         autoClose={3000}
-        hideProgressBar={false}
         closeOnClick={true}
         pauseOnHover={true}
         draggable={true}
+        hideProgressBar={false}
         progress={undefined}
-        theme="dark"
       />
 
       {/* OTP Verification Modal */}
       <OTPVerificationModal
         show={showOTPModal}
+        isLoading={isLoading}
         onClose={() => setShowOTPModal(false)}
         onVerify={handleOTPVerification}
         onResend={() => handleResendOTP()}
-        loading={loading}
-        // resendingOTP={resendingOTP}
       />
     </div>
   );
 };
 
-export default Form;
+export default SignupForm;

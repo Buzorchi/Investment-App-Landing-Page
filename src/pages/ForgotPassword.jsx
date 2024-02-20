@@ -15,7 +15,7 @@ const ForgotPassword = () => {
             Forgot Password?
           </h2>
           <p className="pb-4">
-            Enter your email and we’ll send you a reset password link
+            {`Enter your email and we’ll send you a reset password link`}
           </p>
           <div className="pb-4 ">
             <input

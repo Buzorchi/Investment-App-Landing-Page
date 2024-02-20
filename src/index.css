@@ -7,7 +7,8 @@
 @layer base {
   body {
     @apply text-['Lato'];
-    @apply max-w-[1440px];
+    @apply max-w-[1400px];
+    /* @apply p-[100px]; */
     @apply mx-auto
   }
   h2 {

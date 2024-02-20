@@ -15,11 +15,11 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
 
   const handleLogin = async (values, { setSubmitting }) => {
     try {
-      setLoading(true);
+      setisLoading(true);
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/login",
         {
@@ -32,7 +32,7 @@ const SignIn = () => {
         toast(error?.response?.data?.message);
         setError(response.data.message);
         setSubmitting(false);
-        setLoading(false);
+        setisLoading(false);
       }
       navigate("/");
     } catch (error) {
@@ -43,7 +43,7 @@ const SignIn = () => {
         console.log("error", error);
         toast(error?.message);
       }
-      setLoading(false);
+      setisLoading(false);
       setSubmitting(false);
     }
   };
@@ -120,8 +120,8 @@ const SignIn = () => {
                                 ></input>
                                 <div>
                                   <img
-                                    src={email}
                                     alt=""
+                                    src={email}
                                     className="absolute top-2 ml-6 h-6 w-6 opacity-30"
                                   />
                                 </div>
@@ -148,8 +148,8 @@ const SignIn = () => {
                                 ></input>
                                 <div>
                                   <img
-                                    src={password}
                                     alt=""
+                                    src={password}
                                     className="absolute top-2 ml-6 h-6 w-6 opacity-30"
                                   />
                                 </div>
@@ -178,7 +178,7 @@ const SignIn = () => {
                             disabled={isSubmitting}
                             className="inline-flex w-[336px] items-center justify-center rounded-sm bg-gradient-to-r from-[#CD2128] to-[#490C3C] p-2 text-base font-semibold text-white md:w-[400px]"
                           >
-                            {loading ? "Please wait..." : "Login"}
+                            {isLoading ? "Please wait..." : "Login"}
                             {/* Login */}
                           </button>
                         </div>
@@ -191,7 +191,7 @@ const SignIn = () => {
                           </Link>
                           <p>
                             <span className="text-base font-normal text-black text-opacity-70 ">
-                              Don’t have an account yet?
+                              {`Don’t have an account yet?`}
                             </span>
                           </p>
 
@@ -212,14 +212,14 @@ const SignIn = () => {
           </div>
         </div>
         <ToastContainer
+          theme="dark"
           position="top-center"
           autoClose={3000}
-          hideProgressBar={false}
+          draggable={true}
           closeOnClick={true}
           pauseOnHover={true}
-          draggable={true}
+          hideProgressBar={false}
           progress={undefined}
-          theme="dark"
         />
       </div>
     </div>

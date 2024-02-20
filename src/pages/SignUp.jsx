@@ -1,9 +1,7 @@
 import React from "react";
 // import backdrop from "../assets/background-backdrop.svg";
-import Form from "../component/Form";
 import logo from "../assets/landingPage/raiser.svg";
-// import axios from "axios";
-
+import SignupForm from "../component/SignupForm";
 const SignUp = () => {
   return (
     <div>
@@ -16,9 +14,7 @@ const SignUp = () => {
 
         {/* header */}
         <header className="flex flex-col items-center justify-center py-7">
-          {/* add logo */}
           <img className="mb-5" src={logo} alt="logo" />
-
           <p className="bg-gradient-to-r from-[#CD2128] to-[#490C3C] bg-clip-text text-2xl font-bold text-stone-950 text-transparent">
             Create an account
           </p>
@@ -26,10 +22,10 @@ const SignUp = () => {
             Sign up to Raiser
           </p>
         </header>
-
+        
         {/* main content*/}
         <div className="mx-auto max-w-md rounded bg-white px-5 py-5 shadow-2xl">
-          <Form />
+          <SignupForm />
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,6 +16,15 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setisLoading] = useState(false);
+  const [emailValue, setEmailValue] = useState("");
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("signupEmail");
+    if (storedEmail) {
+      // console.log("emailvalue", emailValue);
+      setEmailValue(storedEmail);
+    }
+  }, []);
 
   const handleLogin = async (values, { setSubmitting }) => {
     try {
@@ -25,7 +34,7 @@ const SignIn = () => {
         {
           email: values.email,
           password: values.password,
-        },
+        }
       );
       if (response.status !== 200) {
         console.log("Login failed", response.data.message);
@@ -34,7 +43,7 @@ const SignIn = () => {
         setSubmitting(false);
         setisLoading(false);
       }
-      navigate("/");
+      navigate("/dashboardmodal");
     } catch (error) {
       console.log("Login failed", error);
       if (error.response && error.response.status === 401) {
@@ -73,14 +82,14 @@ const SignIn = () => {
                 </p>
               </div>
               <Formik
-                initialValues={{ email: "", password: "" }}
+                initialValues={{ email: emailValue, password: "" }}
                 validate={(values) => {
                   const errors = {};
                   if (!values.email) {
                     errors.email = "Required";
                   } else if (
                     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                      values.email,
+                      values.email
                     )
                   ) {
                     errors.email = "Invalid email address";

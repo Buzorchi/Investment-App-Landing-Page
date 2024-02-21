@@ -7,6 +7,7 @@ import LandingPage from "./pages/LandingPage";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
+import DashboardModal from "./component/DashboardModal";
 // import App from './App';
 
 const router = createBrowserRouter([
@@ -24,8 +25,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/forgotpassword",
-    element: <ForgotPassword/>
-  }
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/dashboardmodal",
+    element: <DashboardModal />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

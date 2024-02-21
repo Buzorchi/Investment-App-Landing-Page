@@ -15,6 +15,12 @@ const SignupForm = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showOTPModal, setShowOTPModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
+  const [otp, setOTP] = useState(Array(6).fill(""));
+
+  // Function to reset OTP values
+  const resetOTP = () => {
+    setOTP(Array(6).fill(""));
+  };
 
   // Function to check password conditions
   const isPasswordValid = (password) => {
@@ -33,11 +39,13 @@ const SignupForm = () => {
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/register",
 
-        values,
+        values
       );
       console.log("response", response);
       if (response.status === 200) {
         setUserEmail(values.email);
+        localStorage.setItem("signupEmail", values.email);
+        console.log("signupemail", values.email);
         setShowOTPModal(true);
       }
       setisLoading(false);
@@ -62,7 +70,7 @@ const SignupForm = () => {
       setisLoading(true);
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/validate",
-        { otp },
+        { otp }
       );
       if (response.status === 200) {
         navigate("/signin");
@@ -81,7 +89,7 @@ const SignupForm = () => {
     }
   };
 
-  const handleResendOTP = async (setOTP) => {
+  const handleResendOTP = async () => {
     try {
       setisLoading(true);
       if (!userEmail) {
@@ -90,17 +98,17 @@ const SignupForm = () => {
       }
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/resend-otp",
-        { email: userEmail },
+        { email: userEmail }
       );
-      if (response === 200) {
-        setOTP(Array(6).fill(""));
-        // If resend-OTP  successful, navigate to resendotp page
-        navigate("/resendotp");
+      if (response.status === 200) {
+        resetOTP();
+        // toast.success("OTP Resent Successfully!");
+        toast.success(response?.data?.message)
         // setShowOTPModal(true);
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        toast(error.response?.data?.message);
+        toast(error?.response?.data?.message);
       } else {
         console.log("error", error);
         toast(error?.message);
@@ -343,6 +351,7 @@ const SignupForm = () => {
         onClose={() => setShowOTPModal(false)}
         onVerify={handleOTPVerification}
         onResend={() => handleResendOTP()}
+        resetOTP={resetOTP}
       />
     </div>
   );

@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+body {
+  /* font-family: "Lato", sans-serif; */
+  overflow: hidden;
+  overscroll-behavior: none;
+  /* max-width: 1440px; */
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.5);
+  }
+}
+
+.animate-grow {
+  animation: grow 0.5s ease-in-out;
+}

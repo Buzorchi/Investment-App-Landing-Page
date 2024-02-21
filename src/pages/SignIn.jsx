@@ -43,7 +43,7 @@ const SignIn = () => {
         setSubmitting(false);
         setisLoading(false);
       }
-      navigate("/dashboardmodal");
+      navigate("/dashboard");
     } catch (error) {
       console.log("Login failed", error);
       if (error.response && error.response.status === 401) {

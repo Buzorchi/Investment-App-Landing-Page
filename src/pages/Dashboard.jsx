@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const DashboardModal = () => {
+const Dashboard = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center min-h-screen px-4">
@@ -28,4 +28,4 @@ const DashboardModal = () => {
   );
 };
 
-export default DashboardModal;
+export default Dashboard;

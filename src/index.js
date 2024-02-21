@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     element: <ForgotPassword />,
   },
   {
-    path: "/dashboardmodal",
+    path: "/dashboard",
     element: <Dashboard />,
   },
 ]);

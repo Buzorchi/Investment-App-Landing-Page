@@ -334,9 +334,9 @@ const SignupForm = () => {
             <button
               type="submit"
               disabled={formikProps.isSubmitting}
-              className="inline-flex w-full items-center justify-center gap-2.5 rounded-sm bg-gradient-to-b from-red-600 to-fuchsia-950 px-4 py-[10px] text-base font-semibold text-white"
+              className="inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-gradient-to-b from-red-600 to-fuchsia-950 px-4 py-[10px] text-base font-semibold text-white"
             >
-              {isLoading ? "Please wait..." : "Get Started"}
+              {isLoading ? "Please wait..." : "CREATE ACCOUNT"}
             </button>
           </form>
         )}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import inProgress from "../assets/Progress_1.avif";
+import raiser from "../assets/app/app-debug.apk";
 
 const Dashboard = () => {
   return (
@@ -16,6 +17,18 @@ const Dashboard = () => {
         >
           Go to Landing Page
         </Link>
+
+        <a
+          href={raiser}
+          download
+          className="inline-flex px-2 py-2 mt-4 items-center justify-center gap-5 rounded-[5px] bg-zinc-900 transition delay-150 duration-700 ease-in-out hover:-translate-y-1 hover:scale-110 "
+        >
+          <div className="inline-flex flex-col items-start justify-start text-white">
+            <p className="text-xs font-normal leading-3 text-white  ">
+              Download for Andriod
+            </p>
+          </div>
+        </a>
       </div>
     </>
   );

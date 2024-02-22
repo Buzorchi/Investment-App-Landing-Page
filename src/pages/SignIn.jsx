@@ -176,7 +176,7 @@ const SignIn = () => {
                           <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="inline-flex w-[336px] items-center justify-center rounded-sm bg-gradient-to-r from-[#CD2128] to-[#490C3C] p-2 text-base font-semibold text-white md:w-[400px]"
+                            className="inline-flex w-[336px] items-center justify-center rounded-lg bg-gradient-to-r from-[#CD2128] to-[#490C3C] p-2 text-base font-semibold text-white md:w-[400px]"
                           >
                             {isLoading ? "Please wait..." : "LOG IN"}
                             {/* Login */}

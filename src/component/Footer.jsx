@@ -5,8 +5,8 @@ import alat from "../assets/landingPage/alat.png";
 const Footer = () => {
   return (
     <>
-      <footer id="contact" className="bg-rose-800">
-        <div className="container mx-auto flex flex-wrap items-center justify-between px-10 py-10">
+      <footer id="contact" className="bg-rose-800 ">
+        <div className="container mx-0 flex flex-wrap items-center justify-between px-10 py-10">
           <div className="flex flex-col gap-4">
             {/* Logo */}
             <img src={logoWhite} className="h-auto w-24" alt="Logo" />

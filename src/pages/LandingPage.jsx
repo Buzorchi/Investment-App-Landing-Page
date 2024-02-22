@@ -1,5 +1,5 @@
 import React from "react";
-import { Link  } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FAQ from "../component/FAQ";
 import all from "../assets/landingPage/allInOne.png";
 import blackArrow from "../assets/landingPage/blackArrow.svg";
@@ -25,10 +25,9 @@ import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 
 const LandingPage = () => {
-  
   return (
     <div className="">
-      <Navbar/>
+      <Navbar />
       {/* main content */}
       <main>
         <div className="mx-auto my-11 w-[90%] lg:my-24">
@@ -275,16 +274,13 @@ const LandingPage = () => {
               </div>
 
               <div className="">
-                <img
-                  src={screen}
-                  alt="dollar investment feature"
-                />
+                <img src={screen} alt="dollar investment feature" />
               </div>
             </div>
           </section>
           <FAQ />
         </div>
-       <Footer/>
+        <Footer />
       </main>
     </div>
   );

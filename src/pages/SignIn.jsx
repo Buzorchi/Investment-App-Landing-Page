@@ -25,7 +25,7 @@ const SignIn = () => {
         {
           email: values.email,
           password: values.password,
-        },
+        }
       );
       if (response.status !== 200) {
         console.log("Login failed", response.data.message);
@@ -34,7 +34,7 @@ const SignIn = () => {
         setSubmitting(false);
         setisLoading(false);
       }
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       console.log("Login failed", error);
       if (error.response && error.response.status === 401) {
@@ -73,14 +73,14 @@ const SignIn = () => {
                 </p>
               </div>
               <Formik
-                initialValues={{ email: "", password: "" }}
+                initialValues={{ email: localStorage.getItem("signupEmail") || "", password: "" }}
                 validate={(values) => {
                   const errors = {};
                   if (!values.email) {
                     errors.email = "Required";
                   } else if (
                     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                      values.email,
+                      values.email
                     )
                   ) {
                     errors.email = "Invalid email address";
@@ -178,29 +178,32 @@ const SignIn = () => {
                             disabled={isSubmitting}
                             className="inline-flex w-[336px] items-center justify-center rounded-sm bg-gradient-to-r from-[#CD2128] to-[#490C3C] p-2 text-base font-semibold text-white md:w-[400px]"
                           >
-                            {isLoading ? "Please wait..." : "Login"}
+                            {isLoading ? "Please wait..." : "LOG IN"}
                             {/* Login */}
                           </button>
                         </div>
                         <div className="flex flex-col items-center justify-start gap-2">
+                          <div className="flex gap-2">
+                            <p>
+                              <span className="text-base font-normal text-black text-opacity-70 ">
+                                {`Don’t have an account yet?`}
+                              </span>
+                            </p>
+
+                            <Link
+                              to="/signup"
+                              className="inline-block bg-gradient-to-r from-[#CD2128] to-[#490C3C] bg-clip-text text-base font-semibold text-transparent "
+                            >
+                              {" "}
+                              Register
+                            </Link>
+                          </div>
+
                           <Link
                             to="/forgotpassword"
                             className="text-base font-normal text-zinc-900 opacity-70 "
                           >
                             Forgot Password ?
-                          </Link>
-                          <p>
-                            <span className="text-base font-normal text-black text-opacity-70 ">
-                              {`Don’t have an account yet?`}
-                            </span>
-                          </p>
-
-                          <Link
-                            to="/signup"
-                            className="inline-block bg-gradient-to-r from-[#CD2128] to-[#490C3C] bg-clip-text text-base font-semibold text-transparent "
-                          >
-                            {" "}
-                            Create account
                           </Link>
                         </div>
                       </div>

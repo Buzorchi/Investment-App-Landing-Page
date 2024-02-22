@@ -42,7 +42,18 @@ const OTPVerificationModal = ({
     if (event.key === "Backspace" && index > 0 && otp[index] === "") {
       inputsRef.current[index - 1].focus();
     }
+
+    if (event.key === "Backspace" && otp[index] === ""){
+      const newOtp = [...otp];
+      newOtp[index] = "";
+      setOTP(newOtp)
+    }
   };
+
+  const handleResendOTP = () =>{
+    setOTP(Array(6).fill(""));
+    onResend()
+  }
 
   return (
     <div className={`modal ${show ? "block" : "hidden"}`}>
@@ -179,7 +190,7 @@ const OTPVerificationModal = ({
           </div>
           <h3 class="mt-10 flex items-center justify-center font-semibold text-zinc-900">
            {` Didn’t get the OTP?{" "}`}
-            <button className="text-red-700" onClick={onResend}>
+            <button className="text-red-700" onClick={handleResendOTP}>
               Resend OTP
             </button>
           </h3>

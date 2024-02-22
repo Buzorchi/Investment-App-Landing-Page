@@ -69,16 +69,16 @@ const Navbar = () => {
               </a>
 
               <a
-                href="#contact"
-                className={`text-base font-normal leading-[27px] text-black ${
-                  activeLink === "contact"
-                    ? "font-bold active:leading-loose active:text-rose-800"
-                    : ""
-                }`}
-                onClick={() => handleLinkClick("contact")}
-              >
-                Get in Touch
-              </a>
+                  href="#contact"
+                  className={`text-base font-normal leading-[27px] text-black ${
+                    activeLink === "contact"
+                      ? "font-bold active:leading-loose text-rose-800"
+                      : ""
+                  }`}
+                  onClick={() => handleLinkClick("contact")}
+                >
+                  Get in Touch
+                </a>
             </nav>
           </div>
         </div>

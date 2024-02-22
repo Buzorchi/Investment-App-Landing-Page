@@ -15,6 +15,12 @@ const SignupForm = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showOTPModal, setShowOTPModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
+  const [otp, setOTP] = useState(Array(6).fill(""));
+
+  // Function to reset OTP values
+  const resetOTP = () => {
+    setOTP(Array(6).fill(""));
+  };
 
   // Function to check password conditions
   const isPasswordValid = (password) => {
@@ -33,10 +39,12 @@ const SignupForm = () => {
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/register",
 
-        values,
+        values
       );
       console.log("response", response);
       if (response.status === 200) {
+        localStorage.setItem("signupEmail", values.email);
+        console.log("signupemail", values.email);
         setUserEmail(values.email);
         setShowOTPModal(true);
       }
@@ -62,7 +70,7 @@ const SignupForm = () => {
       setisLoading(true);
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/validate",
-        { otp },
+        { otp }
       );
       if (response.status === 200) {
         navigate("/signin");
@@ -81,7 +89,7 @@ const SignupForm = () => {
     }
   };
 
-  const handleResendOTP = async (setOTP) => {
+  const handleResendOTP = async () => {
     try {
       setisLoading(true);
       if (!userEmail) {
@@ -90,12 +98,12 @@ const SignupForm = () => {
       }
       const response = await axios.post(
         "https://bit-group-one-back-end.azurewebsites.net/api/User/resend-otp",
-        { email: userEmail },
+        { email: userEmail }
       );
-      if (response === 200) {
-        setOTP(Array(6).fill(""));
-        // If resend-OTP  successful, navigate to resendotp page
-        navigate("/resendotp");
+      if (response.status === 200) {
+        resetOTP();
+        // toast.success("OTP Resent Successfully!");
+        toast.success(response?.data?.message);
         // setShowOTPModal(true);
       }
     } catch (error) {
@@ -168,6 +176,14 @@ const SignupForm = () => {
       >
         {(formikProps) => (
           <form onSubmit={formikProps.handleSubmit} className="">
+            <div className="flex flex-col justify-center items-center pb-7">
+              <p className="bg-gradient-to-r from-[#CD2128] to-[#490C3C] bg-clip-text text-2xl font-bold text-stone-950 text-transparent">
+                Create an account
+              </p>
+              <p className="text-base font-normal text-stone-950">
+                Welcome to the future of Investments
+              </p>
+            </div>
             <div className="mb-2">
               <label className="text-base font-semibold text-stone-950 text-opacity-50 ">
                 First Name <span className="text-red-700">*</span>
@@ -343,6 +359,7 @@ const SignupForm = () => {
         onClose={() => setShowOTPModal(false)}
         onVerify={handleOTPVerification}
         onResend={() => handleResendOTP()}
+        resetOTP={resetOTP}
       />
     </div>
   );
